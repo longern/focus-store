@@ -10,7 +10,10 @@ export default defineComponent({
       { href: `/products/${this.product?.id}`, class: "product-card" },
       [
         h("img", { src: this.product?.images?.[0] }),
-        h("div", { class: "name" }, this.product?.name),
+        h("div", { class: "card-text" }, [
+          h("div", { class: "name" }, this.product?.name),
+          h("div", { class: "price" }, this.product?.price)
+        ]),
       ]
     );
   },
