@@ -1,42 +1,30 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ProductCard from "../components/ProductCard"
+import Layout from '@/layouts/Layout.astro';
 
-const products = [{ id: "1", name: "Product 1", price: 980 }]
+export interface Site {
+  title: string;
+  coverImage: string;
+}
+
+let site: Site = null;
+const response = await fetch(`${import.meta.env.PUBLIC_SITE || Astro.site}/api/site`);
+if (response.status == 200 && response.headers.get('Content-Type') == 'application/json')
+    site = await response.json();
 ---
 
 <Layout title="Focus Store">
-  <main>
-    <div class="products">
-      {products.map(product => (<ProductCard product={ product }></ProductCard>))}
+  <main class="home">
+    <div class="coverImage" style={ `background-image: url("${site.coverImage}")` }>
+      <div>{ site.title }</div>
     </div>
   </main>
 </Layout>
 
-<style is:global>
-  .products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+<style>
+  .coverImage {
+    height: 50vh;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
   }
-
-  .products .product-card {
-    margin: 8px;
-    border-radius: 4px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .products .product-card>img {
-    display: block;
-    width: 256px;
-    height: 256px;
-  }
-
-  .products .product-card>.card-text {
-    padding: 8px;
-  }
-
-.products .product-card .price {
-  font-size: 1.1em;
-}
 </style>

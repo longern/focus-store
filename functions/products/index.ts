@@ -1,7 +1,7 @@
 import { h } from "vue";
 import { renderToString } from "vue/server-renderer";
 
-import ProductCard from "../src/components/ProductCard";
+import ProductCard from "../../src/components/ProductCard";
 
 class ProductsInjector {
   products: any;
