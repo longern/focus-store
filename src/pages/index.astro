@@ -9,22 +9,42 @@ export interface Site {
 let site: Site = null;
 const response = await fetch(`${import.meta.env.PUBLIC_SITE || Astro.site}/api/site`);
 if (response.status == 200 && response.headers.get('Content-Type') == 'application/json')
-    site = await response.json();
+  site = await response.json();
 ---
 
-<Layout title="Focus Store">
+<Layout title={ site.title }>
   <main class="home">
     <div class="coverImage" style={ `background-image: url("${site.coverImage}")` }>
-      <div>{ site.title }</div>
+      <a href="/products">
+        <div class="shop-now">Shop Now</div>
+      </a>
     </div>
   </main>
 </Layout>
 
 <style>
   .coverImage {
-    height: 50vh;
+    height: 100vh;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+  }
+
+  .shop-now {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #444;
+    color: white;
+    font-size: 20px;
+    padding: 12px 24px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .shop-now:hover {
+    background-color: #555;
   }
 </style>

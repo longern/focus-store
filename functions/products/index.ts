@@ -24,11 +24,11 @@ class ProductsInjector {
 
 export async function onRequest({ env, next }) {
   try {
-    const { keys: product_keys } = await env.NAMESPACE.list({
+    const { keys: productKeys } = await env.NAMESPACE.list({
       prefix: "products:",
     });
     const products = await Promise.all(
-      product_keys.map(async (key) =>
+      productKeys.map(async (key) =>
         JSON.parse(await env.NAMESPACE.get(key.name))
       )
     );
