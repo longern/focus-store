@@ -12,7 +12,7 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
   site = await response.json();
 ---
 
-<Layout title={ site.title }>
+<Layout title={ site.title } preloads={[{href: site.coverImage, as: "image" }]}>
   <main class="home">
     <div class="coverImage" style={ `background-image: url("${site.coverImage}")` }>
       <a href="/products">
