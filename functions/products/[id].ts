@@ -1,7 +1,7 @@
 import { h } from "vue";
 import { renderToString } from "vue/server-renderer";
 
-import ProductCard from "../../src/components/ProductCard";
+import ProductDetail from "../../src/components/ProductDetail";
 
 class ProductsInjector {
   product: any;
@@ -12,9 +12,9 @@ class ProductsInjector {
 
   async element(element) {
     const html = await renderToString(
-      h(ProductCard, { product: this.product })
+      h(ProductDetail, { product: this.product })
     );
-    element.replace(html, { html: true });
+    element.setInnerContent(html, { html: true });
   }
 }
 
@@ -31,7 +31,7 @@ export async function onRequest({ request, env, next }) {
     });
     const res: Response = await env.ASSETS.fetch(req);
     return new HTMLRewriter()
-      .on(".product-card", new ProductsInjector(product))
+      .on(".product-detail", new ProductsInjector(product))
       .transform(res);
   } catch (err) {
     return new Response(`${err.toString()} ${err.stack}`);

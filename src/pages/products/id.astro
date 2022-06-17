@@ -1,10 +1,54 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import ProductCard from "@/components/ProductCard"
+import ProductDetail from "@/components/ProductDetail"
+
+const product = { id: "id", name: "Product 1", price: 980 }
 ---
 
 <Layout title="Focus Store">
-  <main class="product-detail">
-    <ProductCard></ProductCard>
+  <main>
+    <div class="container">
+      <ProductDetail product={product}></ProductDetail>
+    </div>
   </main>
 </Layout>
+
+<style is:global>
+  .container {
+    margin: auto;
+  }
+
+  .product-detail {
+    display: flex;
+  }
+
+  .product-detail .detail-text {
+    margin: 8px;
+  }
+
+  .product-detail .price {
+    font-size: 1.5em;
+    margin: 8px;
+  }
+
+  @media not all and (max-width: 960px) {
+    .container {
+      width: 1200px;
+      padding: 12px;
+    }
+
+    .product-detail .detail-image {
+      width: 400px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .product-detail {
+      flex-direction: column;
+    }
+
+    .product-detail .detail-image {
+      width: 100%;
+    }
+  }
+</style>

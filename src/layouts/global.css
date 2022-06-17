@@ -10,6 +10,8 @@ body {
   flex-direction: column;
   margin: 0;
   background-color: whitesmoke;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Adjusted",
+    "Segoe UI", "Liberation Sans", sans-serif;
 }
 
 a {
@@ -26,4 +28,41 @@ button {
 .btn-icon {
   display: flex;
   padding: 12px;
+}
+
+.square {
+  position: relative;
+  padding-top: 100%;
+  width: 100%;
+}
+
+.square > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+[badge] {
+  position: relative;
+}
+
+[badge]::before {
+  content: attr(badge);
+  position: absolute;
+  font-size: 12px;
+  height: 1em;
+  right: 0;
+  top: -0.5em;
+  transform: translateX(50%);
+  border-radius: 1em;
+  z-index: 1;
+  padding: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  color: white;
 }
