@@ -1,0 +1,15 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.vue';
+
+export interface Props {
+  title: string;
+  preloads?: Array<{ href: string, as: string }>;
+}
+const { title, preloads = [] } = Astro.props as Props;
+---
+
+<Layout title={title} preloads={preloads}>
+  <Header client:load/>
+  <slot />
+</Layout>

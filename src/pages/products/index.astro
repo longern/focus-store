@@ -1,17 +1,17 @@
 ---
-import Layout from '@/layouts/Layout.astro';
+import NavBar from '@/layouts/NavBar.astro';
 import ProductCard from "@/components/ProductCard"
 
 const products = [{ id: "1", name: "Product 1", price: 980 }]
 ---
 
-<Layout title="Focus Store">
+<NavBar title="Focus Store">
   <main>
     <div class="products">
       {products.map(product => (<ProductCard product={ product }></ProductCard>))}
     </div>
   </main>
-</Layout>
+</NavBar>
 
 <style is:global>
   .products {

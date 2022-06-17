@@ -5,4 +5,9 @@ import vue from "@astrojs/vue";
 export default defineConfig({
   build: { format: "file" },
   integrations: [vue()],
+  vite: {
+    ssr: {
+      external: ["svgo"],
+    },
+  },
 });
