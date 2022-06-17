@@ -1,10 +1,22 @@
+<script setup lang="ts">
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiCart } from "@mdi/js";
+</script>
+
 <template>
-  <header></header>
+  <header>
+    <div style="flex-grow: 1"></div>
+    <button class="btn-icon">
+      <SvgIcon type="mdi" :path="mdiCart"></SvgIcon>
+    </button>
+  </header>
 </template>
 
-<style>
+<style is:global>
 header {
+  flex-shrink: 0;
+  display: flex;
   background-color: #333;
-  min-height: 24px;
+  color: white;
 }
 </style>

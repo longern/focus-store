@@ -10,6 +10,8 @@
   },
   "devDependencies": {
     "@astrojs/vue": "^0.1.5",
+    "@jamescoyle/vue-icon": "^0.1.2",
+    "@mdi/js": "^6.7.96",
     "astro": "^1.0.0-beta.46"
   }
 }
