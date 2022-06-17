@@ -14,10 +14,13 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
 
 <Layout title={ site.title } preloads={[{href: site.coverImage, as: "image" }]}>
   <main class="home">
-    <div class="coverImage" style={ `background-image: url("${site.coverImage}")` }>
+    <div class="cover-image" style={ `background-image: url("${site.coverImage}")` }>
       <a href="/products">
         <div class="shop-now">Shop Now</div>
       </a>
+    </div>
+    <div class="about-us">
+      <h1>About Us</h1>
     </div>
   </main>
 </Layout>
@@ -25,9 +28,18 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
 <style>
   main {
     height: 100%;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
   }
 
-  .coverImage {
+  main > * {
+    height: 100%;
+    scroll-snap-align: center;
+    box-sizing: border-box;
+  }
+
+  .cover-image {
+    position: relative;
     height: 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -50,5 +62,10 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
 
   .shop-now:hover {
     background-color: #555;
+  }
+
+  .about-us {
+    padding: 8px;
+    text-align: center;
   }
 </style>
