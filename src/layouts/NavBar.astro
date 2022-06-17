@@ -10,6 +10,14 @@ const { title, preloads = [] } = Astro.props as Props;
 ---
 
 <Layout title={title} preloads={preloads}>
-  <Header client:load/>
+  <Header client:load />
   <slot />
 </Layout>
+
+<style is:global>
+  @media (max-width: 960px) {
+    html>body {
+      flex-direction: column-reverse;
+    }
+  }
+</style>
