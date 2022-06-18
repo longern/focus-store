@@ -7,9 +7,15 @@ const { t } = useI18n();
 <template>
   <aside>
     <div class="drawer-list">
-      <div v-text="t('Website')"></div>
-      <div v-text="t('Products')"></div>
-      <div v-text="t('Orders')"></div>
+      <router-link to="/website">
+        <span v-text="t('Website')"></span>
+      </router-link>
+      <router-link to="/products">
+        <span v-text="t('Products')"></span>
+      </router-link>
+      <router-link to="/orders">
+        <span v-text="t('Orders')"></span>
+      </router-link>
     </div>
   </aside>
 </template>
@@ -26,13 +32,14 @@ aside {
   color: white;
 }
 
-.drawer-list > div {
+.drawer-list > a {
+  display: block;
   padding: 1rem 4rem;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
-.drawer-list > div:hover {
+.drawer-list > a:hover {
   background-color: #555;
 }
 </style>
