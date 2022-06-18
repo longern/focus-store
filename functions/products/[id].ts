@@ -18,15 +18,13 @@ class ProductsInjector {
   }
 }
 
-export async function onRequest({ request, env, next }) {
+export async function onRequest({ request, params, env, next }) {
   try {
-    const url = new URL(request.url);
-    const productId = url.pathname.replace(/^.*\//, "");
     const product = JSON.parse(
-      await env.NAMESPACE.get(`products:${productId}`)
+      await env.NAMESPACE.get(`products:${params.id}`)
     );
 
-    const req = new Request(`${url.origin}/products/id.html`, {
+    const req = new Request(`${new URL(request.url).origin}/products/id.html`, {
       cf: request.cf,
     });
     const res: Response = await env.ASSETS.fetch(req);

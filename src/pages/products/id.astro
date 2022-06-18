@@ -1,8 +1,13 @@
 ---
+import ProductDetail from "@/components/ProductDetail";
 import Layout from '@/layouts/Layout.astro';
-import ProductDetail from "@/components/ProductDetail"
 
-const product = { id: "id", name: "Product 1", price: 980 }
+const product = {
+  id: "id",
+  name: "Product 1",
+  price: 980,
+  images: ["https://picsum.photos/510/300?random", "https://picsum.photos/510/300?random"],
+}
 ---
 
 <Layout title="Focus Store">
