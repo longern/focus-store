@@ -54,7 +54,7 @@ onBeforeMount(() => {
   </div>
 </template>
 
-<style>
+<style scoped>
 label {
   display: flex;
   min-height: 32px;
