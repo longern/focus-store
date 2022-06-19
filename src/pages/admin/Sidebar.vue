@@ -21,10 +21,6 @@ const { t } = useI18n();
 </template>
 
 <style>
-html > body {
-  flex-direction: row;
-}
-
 aside {
   width: 300px;
   flex-shrink: 0;

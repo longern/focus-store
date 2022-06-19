@@ -45,7 +45,11 @@ onBeforeMount(() => {
         <span v-text="t('About us')"></span>
         <textarea v-model="site.aboutUs"></textarea>
       </label>
-      <button type="submit" class="btn-normal primary">Save</button>
+      <button
+        type="submit"
+        class="btn-normal primary"
+        v-text="t('Save')"
+      ></button>
     </form>
   </div>
 </template>
@@ -63,6 +67,12 @@ label > span {
   flex-shrink: 0;
 }
 
+@media (max-width: 960px) {
+  label {
+    flex-direction: column;
+  }
+}
+
 input[type="text"],
 input[type="number"],
 input[type="email"],
@@ -74,6 +84,7 @@ textarea {
 }
 
 textarea {
+  box-sizing: border-box;
   min-height: 200px;
   width: 100%;
   font: 1em sans-serif;
@@ -84,11 +95,13 @@ textarea {
 en:
   About us: About us
   Cover image: Cover image
+  Save: Save
   Title: Title
   Website: Website
 zh-CN:
   About us: 关于我们
   Cover image: 封面图片
+  Save: 保存
   Title: 标题
   Website: 网站
 </i18n>
