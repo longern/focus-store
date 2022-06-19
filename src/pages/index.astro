@@ -1,12 +1,8 @@
 ---
-import Layout from '@/layouts/Layout.astro';
+import Layout from "@/layouts/Layout.astro";
+import { Site } from "@/interfaces"
 
-export interface Site {
-  title: string;
-  coverImage: string;
-}
-
-let site: Site = null;
+let site: Site = {} as Site;
 const response = await fetch(`${import.meta.env.PUBLIC_SITE || Astro.site}/api/site`);
 if (response.status == 200 && response.headers.get('Content-Type') == 'application/json')
   site = await response.json();
@@ -19,9 +15,30 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
         <div class="shop-now">Shop Now</div>
       </a>
     </div>
+    { site.aboutUs ?
     <div class="about-us">
       <h1>About Us</h1>
+      <p>{ site.aboutUs }</p>
     </div>
+    : null }
+    { site.testimonials ?
+    <div class="testimonials">
+      <h1>Testimonials</h1>
+      <div class="testimonials-list">
+        { site.testimonials.map(testimonial => (
+        <div class="testimonial">
+          <div class="testimonial-avatar">
+            <img src={ testimonial.avatar } width="100" height="100" />
+          </div>
+          <div class="testimonial-text">
+            <div class="testimonial-name">{ testimonial.name }</div>
+            <div class="testimonial-quote">{ testimonial.quote }</div>
+          </div>
+        </div>
+        )) }
+      </div>
+    </div>
+    : null }
   </main>
 </Layout>
 
@@ -32,7 +49,7 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
     scroll-snap-type: y mandatory;
   }
 
-  main > * {
+  main>* {
     height: 100%;
     scroll-snap-align: center;
     box-sizing: border-box;
@@ -64,7 +81,8 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
     background-color: #555;
   }
 
-  .about-us {
+  .about-us,
+  .testimonials {
     padding: 8px;
     text-align: center;
   }
