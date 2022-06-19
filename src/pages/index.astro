@@ -18,7 +18,7 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
     { site.aboutUs ?
     <div class="about-us">
       <h1>About Us</h1>
-      <p>{ site.aboutUs }</p>
+      { site.aboutUs.split("\n").map(line => (<p>{line}</p>)) }
     </div>
     : null }
     { site.testimonials ?
@@ -83,6 +83,8 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
 
   .about-us,
   .testimonials {
+    max-width: 800px;
+    margin: auto;
     padding: 8px;
     text-align: center;
   }
