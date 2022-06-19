@@ -8,7 +8,7 @@ const site = reactive({} as Site);
 const { t } = useI18n();
 
 function saveSite() {
-  fetch("/api/site", {
+  fetch("/api/admin/site", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
