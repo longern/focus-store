@@ -2,8 +2,20 @@
 import { onBeforeMount, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 
-const site = reactive(<Record<string, any>>{});
+import { Site } from "@/interfaces";
+
+const site = reactive({} as Site);
 const { t } = useI18n();
+
+function saveSite() {
+  fetch("/api/site", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(site),
+  });
+}
 
 onBeforeMount(() => {
   fetch("/api/site")
@@ -17,22 +29,30 @@ onBeforeMount(() => {
 <template>
   <div>
     <h1 v-text="t('Website')"></h1>
-    <form>
+    <form @submit.prevent="saveSite">
       <label>
         <span v-text="t('Title')"></span>
         <input type="text" v-model="site.title" />
       </label>
       <label>
-        <span v-text="t('Cover Image')"></span>
-        <input type="file" />
+        <span v-text="t('Cover image')"></span>
+        <div>
+          <img :src="site.coverImage" height="108" width="192" />
+          <input type="file" hidden />
+        </div>
       </label>
+      <label>
+        <span v-text="t('About us')"></span>
+        <textarea v-model="site.aboutUs"></textarea>
+      </label>
+      <button type="submit" class="btn-normal primary">Save</button>
     </form>
   </div>
 </template>
 
 <style>
 label {
-  display: block;
+  display: flex;
   min-height: 32px;
   padding: 12px 0;
 }
@@ -40,25 +60,35 @@ label {
 label > span {
   display: inline-block;
   width: 192px;
+  flex-shrink: 0;
 }
 
 input[type="text"],
 input[type="number"],
-input[type="email"] {
+input[type="email"],
+textarea {
   font-size: 1em;
   padding: 6px;
   border: 1px solid darkgray;
   border-radius: 4px;
 }
+
+textarea {
+  min-height: 200px;
+  width: 100%;
+  font: 1em sans-serif;
+}
 </style>
 
 <i18n lang="yaml">
 en:
-  Cover Image: Cover Image
+  About us: About us
+  Cover image: Cover image
   Title: Title
   Website: Website
 zh-CN:
-  Cover Image: 封面图片
+  About us: 关于我们
+  Cover image: 封面图片
   Title: 标题
   Website: 网站
 </i18n>
