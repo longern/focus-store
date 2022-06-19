@@ -35,6 +35,13 @@ onBeforeMount(() => {
         <input type="text" v-model="site.title" />
       </label>
       <label>
+        <span v-text="t('Logo')"></span>
+        <div>
+          <img :src="site.logo" height="64" width="64" />
+          <input type="file" hidden />
+        </div>
+      </label>
+      <label>
         <span v-text="t('Cover image')"></span>
         <div>
           <img :src="site.coverImage" height="108" width="192" />

@@ -9,6 +9,9 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
 ---
 
 <Layout title={ site.title } preloads={[{href: site.coverImage, as: "image" }]}>
+  <nav>
+    <img src={site.logo} width="64" height="64">
+  </nav>
   <main class="home">
     <div class="cover-image" style={ `background-image: url("${site.coverImage}")` }>
       <a href="/products">
@@ -43,6 +46,11 @@ if (response.status == 200 && response.headers.get('Content-Type') == 'applicati
 </Layout>
 
 <style>
+  nav {
+    display: flex;
+    background-color: white;
+  }
+
   main {
     height: 100%;
     overflow-y: auto;

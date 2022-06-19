@@ -1,5 +1,6 @@
 export interface Site {
   title: string;
+  logo: string;
   coverImage: string;
 
   aboutUs: string;
