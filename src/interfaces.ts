@@ -30,6 +30,7 @@ export interface Product {
   name: string;
   price: number;
   images: Array<string>;
+  description: string;
 }
 
 export const products = <Array<Product>>[
