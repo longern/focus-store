@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/Header.vue';
+import { site } from '@/interfaces';
 
 export interface Props {
   title: string;
@@ -10,7 +11,7 @@ const { title, preloads = [] } = Astro.props as Props;
 ---
 
 <Layout title={title} preloads={preloads}>
-  <Header client:load />
+  <Header client:load logo={site.logo} />
   <slot />
 </Layout>
 

@@ -2,7 +2,9 @@
 import { onBeforeMount, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 
-const products = reactive([]);
+import { Product } from "@/interfaces";
+
+const products = reactive(<Array<Product>>[]);
 const { t } = useI18n();
 
 onBeforeMount(() => {

@@ -1,17 +1,9 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import { Site } from "@/interfaces"
-
-let site: Site = {} as Site;
-const response = await fetch(`${import.meta.env.PUBLIC_SITE || Astro.site}/api/site`);
-if (response.status == 200 && response.headers.get('Content-Type') == 'application/json')
-  site = await response.json();
+import Layout from "@/layouts/NavBar.astro";
+import { site } from "@/interfaces"
 ---
 
-<Layout title={ site.title } preloads={[{href: site.coverImage, as: "image" }]}>
-  <nav>
-    <img src={site.logo} width="64" height="64">
-  </nav>
+<Layout preloads={[{href: site.coverImage, as: "image" }]} title={ site.title }>
   <main class="home">
     <div class="cover-image" style={ `background-image: url("${site.coverImage}")` }>
       <a href="/products">
