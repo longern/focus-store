@@ -1,4 +1,7 @@
 ---
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiArrowLeft } from "@mdi/js";
+
 import ProductDetail from "@/components/ProductDetail";
 import Layout from '@/layouts/NavBar.astro';
 
@@ -11,6 +14,13 @@ const product = {
 ---
 
 <Layout title="Focus Store">
+  <header>
+    <a href="/products">
+      <button class="btn-icon">
+        <SvgIcon type="mdi" path={mdiArrowLeft}></SvgIcon>
+      </button>
+    </a>
+  </header>
   <main>
     <div class="container">
       <ProductDetail product={product}></ProductDetail>
@@ -19,6 +29,11 @@ const product = {
 </Layout>
 
 <style is:global>
+  header {
+    background-color: #333;
+    color: white;
+  }
+
   .container {
     margin: auto;
   }

@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <header>
+  <nav>
     <a href="/">
       <img class="logo" :src="props.logo" width="72" height="72" />
     </a>
@@ -30,18 +30,18 @@ const props = defineProps({
         </button>
       </div>
     </div>
-  </header>
+  </nav>
 </template>
 
 <style>
-header {
+nav {
   flex-shrink: 0;
   display: flex;
   background-color: #333;
   color: white;
 }
 
-header > a {
+nav > a {
   display: inline-flex;
 }
 
@@ -59,7 +59,7 @@ header > a {
 }
 
 @media (max-width: 960px) {
-  header .logo {
+  nav .logo {
     width: 48px;
     height: 48px;
   }

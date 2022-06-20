@@ -14,6 +14,10 @@ body {
     "Segoe UI", "Liberation Sans", sans-serif;
 }
 
+main {
+  overflow: auto;
+}
+
 a {
   color: inherit;
   text-decoration: inherit;

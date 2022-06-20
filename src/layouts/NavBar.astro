@@ -1,6 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import Header from '@/components/Header.vue';
+import Nav from '@/components/Nav.vue';
 import { site } from '@/interfaces';
 
 export interface Props {
@@ -11,14 +11,14 @@ const { title, preloads = [] } = Astro.props as Props;
 ---
 
 <Layout title={title} preloads={preloads}>
-  <Header client:load logo={site.logo} />
+  <Nav client:load logo={site.logo} />
   <slot />
 </Layout>
 
 <style is:global>
   @media (max-width: 960px) {
-    html>body {
-      flex-direction: column-reverse;
+    nav {
+      order: 1;
     }
   }
 </style>
