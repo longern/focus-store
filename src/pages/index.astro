@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/NavBar.astro";
+import Footer from "@/layouts/Footer.astro";
 import { site } from "@/interfaces"
 ---
 
@@ -33,8 +34,10 @@ import { site } from "@/interfaces"
         </div>
         )) }
       </div>
+      <div style="clear: both;"></div>
     </div>
     : null }
+    <Footer></Footer>
   </main>
 </Layout>
 
@@ -48,12 +51,6 @@ import { site } from "@/interfaces"
     height: 100%;
     overflow-y: auto;
     scroll-snap-type: y mandatory;
-  }
-
-  main>* {
-    height: 100%;
-    scroll-snap-align: center;
-    box-sizing: border-box;
   }
 
   .cover-image {
@@ -95,7 +92,15 @@ import { site } from "@/interfaces"
     margin: 12px;
   }
 
-  .testimonial-avatar > img {
+  .testimonial-avatar>img {
     border-radius: 50%;
+  }
+
+  @media (max-width: 960px) {
+    main>* {
+      height: 100%;
+      scroll-snap-align: center;
+      box-sizing: border-box;
+    }
   }
 </style>
