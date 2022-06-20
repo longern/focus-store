@@ -20,6 +20,8 @@ export default defineComponent({
         h("div", { class: "name" }, this.product?.name),
         h("div", { class: "description" }, this.product?.description),
       ]),
+      // Embed base64 encoded data
+      h("focus-data", { hidden: true }, btoa(JSON.stringify(this.product))),
     ]);
   },
 });

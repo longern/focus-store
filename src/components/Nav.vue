@@ -2,6 +2,8 @@
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiAccount, mdiCart, mdiTwitter } from "@mdi/js";
 
+import { cart } from "@/composables/states";
+
 const props = defineProps({
   logo: String,
 });
@@ -20,10 +22,13 @@ const props = defineProps({
           <SvgIcon type="mdi" :path="mdiTwitter"></SvgIcon>
         </button>
       </div>
-      <div style="display: flex">
+      <div style="display: flex; align-items: center">
         <div style="flex-grow: 1"></div>
+        <div id="navExtra"></div>
         <button class="btn-icon">
-          <SvgIcon type="mdi" :path="mdiCart"></SvgIcon>
+          <span style="display: inline-flex" :badge="cart.items.length || null">
+            <SvgIcon type="mdi" :path="mdiCart"></SvgIcon>
+          </span>
         </button>
         <button class="btn-icon">
           <SvgIcon type="mdi" :path="mdiAccount"></SvgIcon>

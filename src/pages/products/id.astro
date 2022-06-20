@@ -3,6 +3,7 @@ import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 
 import ProductDetail from "@/components/ProductDetail";
+import ProductDetailActions from "@/components/ProductDetailActions.vue";
 import Layout from '@/layouts/NavBar.astro';
 import { products } from "@/interfaces";
 
@@ -22,6 +23,7 @@ const product = products[0];
       <ProductDetail product={product}></ProductDetail>
     </div>
   </main>
+  <ProductDetailActions client:only="vue" />
 </Layout>
 
 <style is:global>
