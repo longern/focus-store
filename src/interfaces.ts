@@ -39,5 +39,6 @@ export const products = <Array<Product>>[
     name: "Product 1",
     price: 980,
     images: ["https://picsum.photos/510/300?random"],
+    description: "This is a <b>great</b> product.",
   },
 ];

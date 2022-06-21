@@ -18,8 +18,11 @@ export default defineComponent({
       h("div", { class: "detail-text" }, [
         h("div", { class: "price" }, this.product?.price),
         h("div", { class: "name" }, this.product?.name),
-        h("div", { id : "detailActions" }),
-        h("div", { class: "description" }, this.product?.description),
+        h("div", { id: "detailActions" }),
+        h("div", {
+          class: "description",
+          innerHTML: this.product?.description,
+        }),
       ]),
       // Embed base64 encoded data
       h("focus-data", { hidden: true }, btoa(JSON.stringify(this.product))),

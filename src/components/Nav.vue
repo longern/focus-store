@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiAccount, mdiCart, mdiTwitter } from "@mdi/js";
+import {
+  mdiAccount,
+  mdiCart,
+  mdiFormatListBulleted,
+  mdiTwitter,
+} from "@mdi/js";
 
-import { cart } from "@/composables/states";
+import { cart, showSidebar } from "@/composables/states";
 
 const props = defineProps({
   logo: String,
@@ -22,6 +27,12 @@ onMounted(() => {
     <a href="/">
       <img class="logo" :src="props.logo" width="72" height="72" />
     </a>
+    <button
+      class="btn-icon toggle-siderbar"
+      @click="showSidebar = !showSidebar"
+    >
+      <SvgIcon type="mdi" :path="mdiFormatListBulleted" />
+    </button>
     <div style="flex-grow: 1"></div>
     <div>
       <div class="social-media">
@@ -60,6 +71,10 @@ nav > a {
   display: inline-flex;
 }
 
+nav .toggle-siderbar {
+  display: none;
+}
+
 .social-media {
   display: flex;
 }
@@ -77,6 +92,10 @@ nav > a {
   nav .logo {
     width: 48px;
     height: 48px;
+  }
+
+  nav .toggle-siderbar {
+    display: flex;
   }
 
   .social-media {
