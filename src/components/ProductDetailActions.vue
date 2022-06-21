@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { onBeforeMount, reactive } from "vue";
+import { mdiCartPlus } from "@mdi/js";
+import SvgIcon from "@jamescoyle/vue-icon";
+
 import { cart } from "@/composables/states";
 
 const product = reactive({});
 
 function addToCart() {
-  cart.items.push(product);
+  cart.value.push(product);
 }
 
 onBeforeMount(() => {
@@ -16,6 +19,10 @@ onBeforeMount(() => {
 
 <template>
   <Teleport to="#navExtra">
-    <div @click="addToCart">Add to cart</div>
+    <button class="btn-icon" @click="addToCart">
+      <SvgIcon type="mdi" :path="mdiCartPlus"></SvgIcon>
+    </button>
   </Teleport>
 </template>
+
+<style></style>

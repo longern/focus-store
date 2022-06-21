@@ -49,6 +49,10 @@ button {
   padding: 12px;
 }
 
+.btn-icon > span {
+  display: inline-flex;
+}
+
 .square {
   position: relative;
   padding-top: 100%;

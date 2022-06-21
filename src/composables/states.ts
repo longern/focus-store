@@ -1,3 +1,20 @@
-import { reactive } from "vue";
+import { ref, Ref, watch } from "vue";
 
-export const cart = reactive({ items: [] });
+function storeLocal<T>(key: string, variable: Ref<T>) {
+  const localStorageItem = localStorage.getItem(key);
+  if (localStorageItem !== null) {
+    variable.value = JSON.parse(localStorageItem);
+  }
+
+  watch(
+    () => variable,
+    (value) => {
+      localStorage.setItem(key, JSON.stringify(value.value));
+    },
+    { deep: true }
+  );
+
+  return variable;
+}
+
+export const cart = storeLocal("focusCart", ref([]));

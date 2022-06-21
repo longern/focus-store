@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiAccount, mdiCart, mdiTwitter } from "@mdi/js";
 
@@ -6,6 +7,13 @@ import { cart } from "@/composables/states";
 
 const props = defineProps({
   logo: String,
+});
+
+const mounted = ref(false);
+
+onMounted(() => {
+  // Force update the cart count on mount
+  mounted.value = true;
 });
 </script>
 
@@ -25,11 +33,13 @@ const props = defineProps({
       <div style="display: flex; align-items: center">
         <div style="flex-grow: 1"></div>
         <div id="navExtra"></div>
-        <button class="btn-icon">
-          <span style="display: inline-flex" :badge="cart.items.length || null">
-            <SvgIcon type="mdi" :path="mdiCart"></SvgIcon>
-          </span>
-        </button>
+        <a href="/cart">
+          <button class="btn-icon">
+            <span :key="mounted && cart.length" :badge="cart.length || null">
+              <SvgIcon type="mdi" :path="mdiCart"></SvgIcon>
+            </span>
+          </button>
+        </a>
         <button class="btn-icon">
           <SvgIcon type="mdi" :path="mdiAccount"></SvgIcon>
         </button>
