@@ -1,0 +1,8 @@
+---
+import NavBar from '@/layouts/NavBar.astro';
+import Cart from '@/components/Cart.vue';
+---
+
+<NavBar title="Cart">
+  <Cart client:only="vue" />
+</NavBar>
