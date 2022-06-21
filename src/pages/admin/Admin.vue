@@ -22,59 +22,63 @@ app.use(
 </script>
 
 <template>
-  <nav v-if="isMobile">
-    <button class="btn-icon" @click="showSidebar = !showSidebar">
-      <SvgIcon type="mdi" :path="mdiMenu"></SvgIcon>
-    </button>
-  </nav>
-  <main>
-    <Sidebar :class="showSidebar ? null : 'hide'"></Sidebar>
-    <div class="container">
-      <router-view></router-view>
-    </div>
-  </main>
+  <div class="admin">
+    <nav v-if="isMobile">
+      <button class="btn-icon" @click="showSidebar = !showSidebar">
+        <SvgIcon type="mdi" :path="mdiMenu"></SvgIcon>
+      </button>
+    </nav>
+    <main>
+      <Sidebar :class="showSidebar ? null : 'hide'"></Sidebar>
+      <div class="container">
+        <router-view></router-view>
+      </div>
+    </main>
+  </div>
 </template>
 
 <style>
-main {
-  display: flex;
+.admin {
+  width: 100%;
+  height: 100%;
 }
 
-nav {
+.admin main {
+  display: flex;
+  overflow: auto;
+}
+
+.admin nav {
   background-color: #333;
   color: white;
 }
 
-.container {
+.admin .container {
   width: 100%;
   padding: 12px;
 }
 
 @media (max-width: 960px) {
-  aside {
+  .admin aside {
     position: fixed;
     height: 100%;
     left: 0;
     transition: left 0.2s ease-in-out;
   }
 
-  aside.hide {
+  .admin aside.hide {
     left: -100%;
   }
 }
 
-@media not all and (max-width: 960px) {
-  html > body {
-    flex-direction: row;
-  }
+.admin  {
+  flex-direction: row;
+}
 
-  .container {
+@media not all and (max-width: 960px) {
+  .admin .container {
     width: 1200px;
     margin: 0 auto;
   }
-}
-
-main {
-  overflow: auto;
 }
 </style>
