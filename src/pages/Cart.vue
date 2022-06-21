@@ -14,7 +14,7 @@ function removeFromCart(product) {
     <div class="cart-items">
       <div class="cart-item" v-for="item in cart" :key="item.id">
         <div class="cart-item-image">
-          <img :src="item.images?.[0]" />
+          <img :src="item.images?.[0]" width="100" height="100" />
         </div>
         <div class="cart-item-details">
           <div class="cart-item-name">{{ item.name }}</div>
