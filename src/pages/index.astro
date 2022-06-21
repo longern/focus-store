@@ -4,7 +4,7 @@ import Footer from "@/layouts/Footer.astro";
 import { site } from "@/interfaces"
 ---
 
-<Layout preloads={[{href: site.coverImage, as: "image" }]} title={ site.title }>
+<Layout preloads={[{href: site.coverImage, as: "image" }]}>
   <main class="home">
     <div class="cover-image" style={ `background-image: url("${site.coverImage}")` }>
       <a href="/products">

@@ -4,7 +4,7 @@ import { products } from '@/interfaces';
 import NavBar from '@/layouts/NavBar.astro';
 ---
 
-<NavBar title="Focus Store">
+<NavBar title="Products">
   <main>
     <div class="products">
       {products.map(product => (<ProductCard product={ product }></ProductCard>))}

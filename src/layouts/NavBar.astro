@@ -4,13 +4,13 @@ import Nav from '@/components/Nav.vue';
 import { site } from '@/interfaces';
 
 export interface Props {
-  title: string;
+  title?: string;
   preloads?: Array<{ href: string, as: string }>;
 }
 const { title, preloads = [] } = Astro.props as Props;
 ---
 
-<Layout title={title} preloads={preloads}>
+<Layout title={title ? `${title} - ${site.title}` : site.title} preloads={preloads}>
   <Nav client:load logo={site.logo} />
   <slot />
 </Layout>
