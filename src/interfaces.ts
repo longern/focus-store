@@ -3,6 +3,8 @@ export interface Site {
   logo: string;
   coverImage: string;
 
+  featured: Array<Product>;
+
   aboutUs: string;
   socialAccounts: Array<{ type: string; link: string }>;
   testimonials: Array<{
