@@ -19,4 +19,6 @@ function storeLocal<T>(key: string, variable: Ref<T>) {
 
 export const cart = storeLocal("focusCart", ref([]));
 
+export const isMobile = ref(false);
+
 export const showSidebar = ref(false);

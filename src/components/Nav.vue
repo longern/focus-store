@@ -8,7 +8,7 @@ import {
   mdiTwitter,
 } from "@mdi/js";
 
-import { cart, showSidebar } from "@/composables/states";
+import { cart, isMobile, showSidebar } from "@/composables/states";
 
 const props = defineProps({
   logo: String,
@@ -19,6 +19,10 @@ const mounted = ref(false);
 onMounted(() => {
   // Force update the cart count on mount
   mounted.value = true;
+  isMobile.value = window.innerWidth <= 960;
+  window.addEventListener("resize", () => {
+    isMobile.value = window.innerWidth <= 960;
+  });
 });
 </script>
 
@@ -28,11 +32,21 @@ onMounted(() => {
       <img class="logo" :src="props.logo" width="72" height="72" />
     </a>
     <button
+      v-if="isMobile"
       class="btn-icon toggle-siderbar"
       @click="showSidebar = !showSidebar"
     >
       <SvgIcon type="mdi" :path="mdiFormatListBulleted" />
     </button>
+    <div style="flex-grow: 1"></div>
+
+    <component
+      :is="isMobile ? 'aside' : 'div'"
+      :class="['category-menu', showSidebar ? null : 'hide']"
+    >
+      <a href="/categories/1">Category 1</a>
+    </component>
+
     <div style="flex-grow: 1"></div>
     <div>
       <div class="social-media">
@@ -60,19 +74,57 @@ onMounted(() => {
 </template>
 
 <style>
-nav {
+nav,
+aside.category-menu {
   flex-shrink: 0;
   display: flex;
   background-color: #333;
   color: white;
 }
 
-nav > a {
-  display: inline-flex;
+.category-menu {
+  display: flex;
+  align-items: flex-end;
 }
 
-nav .toggle-siderbar {
-  display: none;
+.category-menu > a {
+  padding: 12px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.category-menu > a:hover {
+  background-color: #444;
+}
+
+aside.category-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: left 0.2s ease-in-out;
+  bottom: 48px;
+  width: 100%;
+  z-index: 3;
+  flex-direction: column;
+}
+
+aside.category-menu.hide {
+  left: -100%;
+}
+
+aside.category-menu > a {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  /* Hide server-rendered category menu on mobile */
+  div.category-menu {
+    display: none;
+  }
+}
+
+nav > a {
+  display: inline-flex;
 }
 
 .social-media {
@@ -92,10 +144,6 @@ nav .toggle-siderbar {
   nav .logo {
     width: 48px;
     height: 48px;
-  }
-
-  nav .toggle-siderbar {
-    display: flex;
   }
 
   .social-media {

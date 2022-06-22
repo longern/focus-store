@@ -3,10 +3,9 @@ import { onBeforeMount, reactive } from "vue";
 import { mdiCartPlus } from "@mdi/js";
 import SvgIcon from "@jamescoyle/vue-icon";
 
-import { cart } from "@/composables/states";
+import { cart, isMobile } from "@/composables/states";
 
 const product = reactive({});
-const isMobile = window.innerWidth <= 960;
 
 function addToCart() {
   cart.value.push(product);
