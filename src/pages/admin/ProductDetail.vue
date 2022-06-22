@@ -28,7 +28,10 @@ async function saveProduct() {
   });
 
   const productId: string = (await response.json()).id;
-  if (props.id === "new") router.push(`/products/${productId}`);
+  if (props.id === "new") {
+    router.push(`/products/${productId}`);
+  }
+  originalProductName.value = product.name;
 
   saving.value = false;
 }
@@ -58,7 +61,7 @@ onBeforeMount(() => {
       </label>
       <label>
         <span v-text="t('Price')"></span>
-        <input type="text" v-model="product.price" />
+        <input type="number" v-model="product.price" />
       </label>
       <label>
         <span v-text="t('Description')"></span>

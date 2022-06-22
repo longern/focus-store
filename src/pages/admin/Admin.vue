@@ -4,7 +4,7 @@ import { createI18n } from "vue-i18n";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiMenu } from "@mdi/js";
 
-import router from "@/router";
+import router from "@/plugins/router";
 import Sidebar from "./Sidebar.vue";
 
 const app = getCurrentInstance().appContext.app;

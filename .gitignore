@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # VSCode
 .vscode/
+
+# Cloudflare local preview
+.mf/
