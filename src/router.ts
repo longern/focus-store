@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
+import Categories from "@/pages/admin/Categories.vue";
 import Products from "@/pages/admin/Products.vue";
 import Website from "@/pages/admin/Website.vue";
 
@@ -10,6 +11,7 @@ if (typeof window !== "undefined") {
     routes: [
       { name: "website", path: "/website", component: Website },
       { name: "products", path: "/products", component: Products },
+      { name: "categories", path: "/categories", component: Categories },
     ],
   });
 }

@@ -13,6 +13,9 @@ const { t } = useI18n();
       <router-link to="/products">
         <span v-text="t('Products')"></span>
       </router-link>
+      <router-link to="/categories">
+        <span v-text="t('Categories')"></span>
+      </router-link>
       <router-link to="/orders">
         <span v-text="t('Orders')"></span>
       </router-link>
@@ -42,10 +45,12 @@ aside {
 
 <i18n lang="yaml">
 en:
+  Categories: Categories
   Orders: Orders
   Products: Products
   Website: Website
-"zh-CN":
+zh-CN:
+  Categories: 分类
   Orders: 订单
   Products: 产品
   Website: 网站

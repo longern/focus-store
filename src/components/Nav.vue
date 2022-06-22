@@ -88,7 +88,10 @@ aside.category-menu {
 }
 
 .category-menu > a {
-  padding: 12px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
   transition: background-color 0.2s ease-in-out;
 }
 
