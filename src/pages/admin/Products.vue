@@ -10,7 +10,7 @@ const { t } = useI18n();
 onBeforeMount(() => {
   fetch("/api/products")
     .then((res) => res.json())
-    .then((res) => {
+    .then((res: Array<Product>) => {
       products.splice(0, products.length, ...res);
     });
 });

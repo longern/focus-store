@@ -32,6 +32,7 @@ aside {
   flex-shrink: 0;
   background-color: #333;
   color: white;
+  z-index: 1;
 }
 
 .drawer-list > a {
