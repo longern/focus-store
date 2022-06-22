@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onBeforeMount, reactive } from "vue";
+import { onBeforeMount, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
 import { Product } from "@/interfaces";
 
@@ -8,33 +9,48 @@ const props = defineProps({
   id: String,
 });
 
+const originalProductName = ref("\xA0");
 const product = reactive({} as Product);
-const { t } = useI18n();
+const saving = ref(false);
 
-function saveProduct() {
-  fetch("/api/admin/products", {
+const { t } = useI18n();
+const router = useRouter();
+
+async function saveProduct() {
+  saving.value = true;
+
+  const response = await fetch("/api/admin/products", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(product),
   });
+
+  const productId: string = (await response.json()).id;
+  if (props.id === "new") router.push(`/products/${productId}`);
+
+  saving.value = false;
 }
 
 onBeforeMount(() => {
-  if (!props.id || props.id === "new") return;
+  if (!props.id || props.id === "new") {
+    originalProductName.value = t("New Product");
+    return;
+  }
 
   fetch(`/api/products/${props.id}`)
     .then((res) => res.json())
     .then((res) => {
       Object.assign(product, res);
+      originalProductName.value = res.name;
     });
 });
 </script>
 
 <template>
   <div>
-    <h1 v-once v-text="product.name || t('New Product')"></h1>
+    <h1 v-text="originalProductName"></h1>
     <form @submit.prevent="saveProduct">
       <label>
         <span v-text="t('Name')"></span>
@@ -51,6 +67,7 @@ onBeforeMount(() => {
       <button
         type="submit"
         class="btn-normal primary"
+        :disabled="saving"
         v-text="t('Save')"
       ></button>
     </form>
