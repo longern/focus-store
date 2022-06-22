@@ -1,5 +1,5 @@
 ---
-import ProductCard from "@/components/ProductCard";
+import Products from "@/components/Products.astro";
 import { site } from "@/interfaces";
 import Footer from "@/layouts/Footer.astro";
 import Layout from "@/layouts/NavBar.astro";
@@ -19,6 +19,12 @@ import Layout from "@/layouts/NavBar.astro";
         </a>
       </div>
     </div>
+    { site.featured?.length ?
+    <div class="featured">
+      <h1>Featured</h1>
+      <Products products={site.featured} />
+    </div>
+    : null }
     { site.aboutUs ?
     <div class="about-us">
       <h1>About Us</h1>
@@ -39,10 +45,10 @@ import Layout from "@/layouts/NavBar.astro";
           <div class="testimonial-text">
             <div class="testimonial-quote">{ testimonial.quote }</div>
           </div>
+          <div style="clear: both;"></div>
         </div>
         )) }
       </div>
-      <div style="clear: both;"></div>
     </div>
     : null }
     <Footer></Footer>
@@ -81,17 +87,22 @@ import Layout from "@/layouts/NavBar.astro";
     border-radius: 4px;
   }
 
+  main h1 {
+    text-align: center;
+  }
+
   .about-us,
   .testimonials {
     max-width: 800px;
     margin: auto;
     padding: 8px;
-    text-align: center;
+    line-height: 1.6em;
   }
 
   .testimonial-avatar {
     float: left;
     margin: 12px;
+    text-align: center;
   }
 
   .testimonial-avatar>img {
@@ -103,6 +114,13 @@ import Layout from "@/layouts/NavBar.astro";
       height: 100%;
       scroll-snap-align: center;
       box-sizing: border-box;
+      overflow-y: auto;
+    }
+  }
+
+  @media not all and (max-width: 960px) {
+    main>* {
+      margin-bottom: 48px;
     }
   }
 </style>
