@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory, Router } from "vue-router";
 
 import Categories from "@/pages/admin/Categories.vue";
 import Products from "@/pages/admin/Products.vue";
 import Website from "@/pages/admin/Website.vue";
 
-let router = null;
+let router: Router = null;
 if (typeof window !== "undefined") {
   router = createRouter({
     history: createWebHashHistory(),

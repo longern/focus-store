@@ -19,11 +19,15 @@ onBeforeMount(() => {
 <template>
   <div>
     <h1 v-text="t('Products')"></h1>
+
+    <router-link to="/products/new">
+      <button class="btn-normal primary">
+        <span v-text="t('Add New Product')"></span>
+      </button>
+    </router-link>
+
     <div class="product-list">
-      <router-link
-        :to="`/admin/products/${product.id}`"
-        v-for="product in products"
-      >
+      <router-link :to="`/products/${product.id}`" v-for="product in products">
         <div class="product-item">
           <div class="product-image">
             <img :src="product.images?.[0]" height="100" width="100" />
@@ -62,7 +66,9 @@ onBeforeMount(() => {
 
 <i18n lang="yaml">
 en:
+  Add New Product: Add New Product
   Products: Products
 zh-CN:
+  Add New Product: 添加新产品
   Products: 产品
 </i18n>

@@ -72,6 +72,7 @@ label > span {
   display: inline-block;
   width: 192px;
   flex-shrink: 0;
+  line-height: 2em;
 }
 
 @media (max-width: 960px) {

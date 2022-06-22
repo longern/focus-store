@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getCurrentInstance, provide, ref } from "vue";
+import { getCurrentInstance, provide, ref, watch } from "vue";
 import { createI18n } from "vue-i18n";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiMenu } from "@mdi/js";
@@ -8,8 +8,8 @@ import router from "@/router";
 import Sidebar from "./Sidebar.vue";
 
 const app = getCurrentInstance().appContext.app;
-const isMobile = window.innerWidth <= 960;
-const showSidebar = ref(!isMobile);
+const isMobile = ref(window.innerWidth <= 960);
+const showSidebar = ref(!isMobile.value);
 provide("showSidebar", showSidebar);
 
 app.use(router);
@@ -19,6 +19,14 @@ app.use(
     fallbackLocale: "en",
   })
 );
+
+watch(router.currentRoute, () => {
+  showSidebar.value = false;
+});
+
+window.addEventListener("resize", () => {
+  isMobile.value = window.innerWidth <= 960;
+});
 </script>
 
 <template>
@@ -28,23 +36,23 @@ app.use(
         <SvgIcon type="mdi" :path="mdiMenu"></SvgIcon>
       </button>
     </nav>
-    <main>
+    <div style="display: flex; min-height: 0; height: 100%">
       <Sidebar :class="showSidebar ? null : 'hide'"></Sidebar>
-      <div class="container">
-        <router-view></router-view>
-      </div>
-    </main>
+      <main>
+        <div class="container">
+          <router-view></router-view>
+        </div>
+      </main>
+    </div>
   </div>
 </template>
 
 <style>
 .admin {
-  width: 100%;
-  height: 100%;
+  display: contents;
 }
 
 .admin main {
-  display: flex;
   overflow: auto;
 }
 
@@ -54,6 +62,7 @@ app.use(
 }
 
 .admin .container {
+  box-sizing: border-box;
   width: 100%;
   padding: 12px;
 }
@@ -69,10 +78,6 @@ app.use(
   .admin aside.hide {
     left: -100%;
   }
-}
-
-.admin  {
-  flex-direction: row;
 }
 
 @media not all and (max-width: 960px) {
