@@ -19,6 +19,9 @@ const { t } = useI18n();
       <router-link to="/orders">
         <span v-text="t('Orders')"></span>
       </router-link>
+      <a href="/">
+        <span v-text="t('Back to website')"></span>
+      </a>
     </div>
   </aside>
 </template>
@@ -45,13 +48,15 @@ aside {
 
 <i18n lang="yaml">
 en:
+  Back to website: Back to website
   Categories: Categories
   Orders: Orders
   Products: Products
   Website: Website
 zh-CN:
+  Back to website: 返回网站
   Categories: 分类
   Orders: 订单
-  Products: 产品
+  Products: 商品
   Website: 网站
 </i18n>

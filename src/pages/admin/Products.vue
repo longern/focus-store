@@ -69,6 +69,6 @@ en:
   Add New Product: Add New Product
   Products: Products
 zh-CN:
-  Add New Product: 添加新产品
-  Products: 产品
+  Add New Product: 添加新商品
+  Products: 商品
 </i18n>
