@@ -6,6 +6,7 @@ import { mdiPlus } from "@mdi/js";
 import SvgIcon from "@jamescoyle/vue-icon";
 
 import { Product } from "@/interfaces";
+import { uploadImage } from "@/utils";
 
 const props = defineProps({
   id: String,
@@ -39,17 +40,6 @@ async function saveProduct() {
   saving.value = false;
 }
 
-async function uploadImage() {
-  const file = imageInput.value.files?.[0];
-  if (!file) return;
-
-  await fetch("/api/assets", {
-    method: "PUT",
-    headers: { "Content-Type": file.type },
-    body: file,
-  });
-}
-
 onBeforeMount(() => {
   if (!props.id || props.id === "new") {
     originalProductName.value = t("New Product");
@@ -69,33 +59,38 @@ onBeforeMount(() => {
   <div>
     <h1 v-text="originalProductName"></h1>
     <form @submit.prevent="saveProduct">
-      <label>
+      <label class="form-label">
         <span v-text="t('Name')"></span>
         <input type="text" v-model="product.name" required />
       </label>
-      <label>
+      <label class="form-label">
         <span v-text="t('Price')"></span>
         <input type="number" v-model="product.price" required />
       </label>
-      <label style="pointer-events: none">
+      <div class="form-label">
         <span v-text="t('Images')"></span>
         <div class="images">
           <template v-for="image in product.images">
             <img :src="image" height="100" width="100" />
           </template>
-          <div class="add-image">
+          <label class="add-image">
             <SvgIcon type="mdi" :path="mdiPlus" size="100" />
-          </div>
+            <input
+              ref="imageInput"
+              type="file"
+              accept="image/*"
+              hidden
+              @change="
+                async () => {
+                  product.images = product.images || [];
+                  product.images.push(await uploadImage(imageInput));
+                }
+              "
+            />
+          </label>
         </div>
-        <input
-          ref="imageInput"
-          type="file"
-          accept="image/*"
-          hidden
-          @change="uploadImage"
-        />
-      </label>
-      <label>
+      </div>
+      <label class="form-label">
         <span v-text="t('Description')"></span>
         <textarea v-model="product.description"></textarea>
       </label>
@@ -110,13 +105,13 @@ onBeforeMount(() => {
 </template>
 
 <style scoped>
-label {
+.form-label {
   display: flex;
   min-height: 32px;
   padding: 12px 0;
 }
 
-label > span {
+.form-label > span {
   display: inline-block;
   width: 192px;
   flex-shrink: 0;
@@ -124,7 +119,7 @@ label > span {
 }
 
 @media (max-width: 960px) {
-  label {
+  .form-label {
     flex-direction: column;
   }
 }
@@ -148,6 +143,7 @@ textarea {
 
 .images > img {
   margin-right: 8px;
+  border-radius: 4px;
 }
 
 .add-image {

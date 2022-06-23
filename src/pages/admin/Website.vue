@@ -1,9 +1,11 @@
 <script setup lang="ts">
+// @ts-ignore
 import md5 from "md5";
 import { onBeforeMount, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { Site } from "@/interfaces";
+import { uploadImage } from "@/utils";
 
 const coverImage = ref(null);
 const logo = ref(null);
@@ -18,20 +20,6 @@ function saveSite() {
     },
     body: JSON.stringify(site),
   });
-}
-
-async function uploadImage(imageInput: HTMLInputElement) {
-  const file = imageInput.files?.[0];
-  if (!file) return;
-
-  const md5Hash = md5(new Uint8Array(await file.arrayBuffer()));
-  const response = await fetch(`/api/assets/${md5Hash}`, {
-    method: "PUT",
-    body: file,
-  });
-
-  imageInput.files = null;
-  return response.url;
 }
 
 function uploadLazyImage(imageInput: HTMLInputElement, key: string) {
