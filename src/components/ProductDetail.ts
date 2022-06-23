@@ -28,7 +28,11 @@ export default defineComponent({
         }),
       ]),
       // Embed base64 encoded data
-      h("focus-data", { hidden: true }, btoa(JSON.stringify(this.product))),
+      h(
+        "focus-data",
+        { hidden: true },
+        btoa(encodeURIComponent(JSON.stringify(this.product)))
+      ),
     ]);
   },
 });

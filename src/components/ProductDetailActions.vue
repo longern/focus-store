@@ -12,7 +12,7 @@ function addToCart() {
 }
 
 onBeforeMount(() => {
-  const productData = atob(document.querySelector("focus-data").textContent);
+  const productData = decodeURIComponent(atob(document.querySelector("focus-data").textContent));
   Object.assign(product, JSON.parse(productData));
 });
 </script>
