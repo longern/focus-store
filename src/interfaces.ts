@@ -1,7 +1,10 @@
 export interface Site {
   title: string;
   logo: string;
-  coverImage: string;
+  coverImage: {
+    src: string;
+    lazySrc: string;
+  };
 
   featured: Array<Product>;
 

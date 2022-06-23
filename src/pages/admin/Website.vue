@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { onBeforeMount, reactive } from "vue";
+import md5 from "md5";
+import { onBeforeMount, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { Site } from "@/interfaces";
 
+const coverImage = ref(null);
+const logo = ref(null);
 const site = reactive({} as Site);
 const { t } = useI18n();
 
@@ -15,6 +18,51 @@ function saveSite() {
     },
     body: JSON.stringify(site),
   });
+}
+
+async function uploadImage(imageInput: HTMLInputElement) {
+  const file = imageInput.files?.[0];
+  if (!file) return;
+
+  const md5Hash = md5(new Uint8Array(await file.arrayBuffer()));
+  const response = await fetch(`/api/assets/${md5Hash}`, {
+    method: "PUT",
+    body: file,
+  });
+
+  imageInput.files = null;
+  return response.url;
+}
+
+function uploadLazyImage(imageInput: HTMLInputElement, key: string) {
+  const file = imageInput.files?.[0];
+  if (!file) return;
+
+  site[key] = {};
+
+  file
+    .arrayBuffer()
+    .then((buffer) =>
+      fetch(`/api/assets/${md5(new Uint8Array(buffer))}`, {
+        method: "PUT",
+        body: file,
+      })
+    )
+    .then((res) => site[key].src = res.url);
+
+  // Resize image to get thumbnail
+  const image = new Image();
+  image.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = image.width / 10;
+    canvas.height = image.height / 10;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    site[key].lazySrc = canvas.toDataURL("image/jpeg", 0.2);
+  };
+  image.src = URL.createObjectURL(file);
+
+  imageInput.files = null;
 }
 
 onBeforeMount(() => {
@@ -38,14 +86,30 @@ onBeforeMount(() => {
         <span v-text="t('Logo')"></span>
         <div>
           <img :src="site.logo" height="64" width="64" />
-          <input type="file" hidden />
+          <input
+            ref="logo"
+            type="file"
+            accept="image/*"
+            hidden
+            @change="async () => (site.logo = await uploadImage(logo))"
+          />
         </div>
       </label>
       <label>
         <span v-text="t('Cover image')"></span>
         <div>
-          <img :src="site.coverImage" height="108" width="192" />
-          <input type="file" hidden />
+          <img
+            :src="site.coverImage?.src || site.coverImage?.lazySrc"
+            height="108"
+            width="192"
+          />
+          <input
+            ref="coverImage"
+            type="file"
+            accept="image/*"
+            hidden
+            @change="uploadLazyImage(coverImage, 'coverImage')"
+          />
         </div>
       </label>
       <label>
