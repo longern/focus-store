@@ -1,13 +1,15 @@
 ---
+import LazyBackground from '@/components/LazyBackground.vue';
 import Products from "@/components/Products.astro";
 import { site } from "@/interfaces";
 import Footer from "@/layouts/Footer.astro";
 import Layout from "@/layouts/NavBar.astro";
 ---
 
-<Layout preloads={[{href: site.coverImage, as: "image" }]}>
+<Layout preloads={[{href: site.coverImage.src, as: "image" }]}>
   <main class="home">
-    <div class="cover-image" style={ `background-image: url("${site.coverImage}")` }>
+    <div class="cover-image">
+      <LazyBackground client:load src={site.coverImage.src} lazySrc={site.coverImage.lazySrc}></LazyBackground>
       <div style="text-align: center">
         <div class="site-title">
           <h1>{site.title}</h1>
