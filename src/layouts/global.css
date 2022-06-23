@@ -95,3 +95,8 @@ button {
   background-color: red;
   color: white;
 }
+
+.currency-prefix,
+.currency-suffix {
+  font-size: 0.7em;
+}

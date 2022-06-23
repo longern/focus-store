@@ -39,7 +39,15 @@ const { products } = Astro.props as { products: Array<Product> };
     padding: 8px;
   }
 
+  .products .product-card .name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .products .product-card .price {
-    font-size: 1.1em;
+    font-size: 1.2em;
   }
 </style>
