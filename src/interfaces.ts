@@ -33,12 +33,22 @@ if (import.meta.env.PUBLIC_SITE) {
     Object.assign(site, await response.json());
 }
 
+export interface ProductOption {
+  name: string;
+  values: Array<{
+    text: string;
+    image?: string;
+    priceModifier?: string;
+  }>;
+}
+
 export interface Product {
   id: string;
   name: string;
   price: number;
   images: Array<string>;
   description: string;
+  options: Array<ProductOption>;
 }
 
 export const products = <Array<Product>>[

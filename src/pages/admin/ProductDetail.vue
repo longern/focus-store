@@ -94,6 +94,35 @@ onBeforeMount(() => {
         <span v-text="t('Description')"></span>
         <textarea v-model="product.description"></textarea>
       </label>
+      <div class="form-label">
+        <span v-text="t('Options')"></span>
+        <div>
+          <button
+            class="btn-normal primary"
+            @click.prevent="
+              (product.options ||= []).push({ name: '', values: [] })
+            "
+          >
+            <span v-text="t('Add Option')"></span>
+          </button>
+          <div v-for="option in product.options">
+            <details>
+              <summary>
+                <input type="text" v-model="option.name" />
+              </summary>
+              <button
+                class="btn-normal primary"
+                @click.prevent="option.values.push({ text: '' })"
+              >
+                <span v-text="t('Add Option Value')"></span>
+              </button>
+              <div v-for="value in option.values" class="value-text">
+                <input type="text" v-model="value.text" />
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
       <button
         type="submit"
         class="btn-normal primary"
@@ -154,6 +183,14 @@ textarea {
   pointer-events: initial;
   cursor: pointer;
 }
+
+summary {
+  margin: 4px 0;
+}
+
+.value-text {
+  margin: 4px 0;
+}
 </style>
 
 <i18n lang="yaml">
@@ -162,6 +199,7 @@ en:
   Images: Images
   Name: Name
   New Product: New Product
+  Options: Options
   Price: Price
   Save: Save
 zh-CN:
@@ -169,6 +207,7 @@ zh-CN:
   Images: 图片
   Name: 名称
   New Product: 新商品
+  Options: 选项
   Price: 价格
   Save: 保存
 </i18n>
