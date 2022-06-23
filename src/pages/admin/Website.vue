@@ -104,6 +104,10 @@ onBeforeMount(() => {
         <span v-text="t('About us')"></span>
         <textarea v-model="site.aboutUs"></textarea>
       </label>
+      <label>
+        <span v-text="t('Currency symbol')"></span>
+        <input type="text" v-model="site.currencyPrefix" />
+      </label>
       <button
         type="submit"
         class="btn-normal primary"
@@ -155,12 +159,14 @@ textarea {
 en:
   About us: About us
   Cover image: Cover image
+  Currency symbol: Currency symbol
   Save: Save
   Title: Title
   Website: Website
 zh-CN:
   About us: 关于我们
   Cover image: 封面图片
+  Currency symbol: 货币符号
   Save: 保存
   Title: 标题
   Website: 网站

@@ -16,6 +16,9 @@ export interface Site {
     caption: string;
     quote: string;
   }>;
+
+  currencyPrefix: string;
+  currencySuffix: string;
 }
 
 export const site = {} as Site;
