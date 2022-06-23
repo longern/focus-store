@@ -43,7 +43,11 @@ onMounted(() => {
   z-index: -100;
 }
 
-.lazy-background > div.lazy {
-  filter: blur(2px);
+.lazy-background > div.lazy::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2px);
 }
 </style>

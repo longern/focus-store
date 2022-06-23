@@ -100,3 +100,16 @@ button {
 .currency-suffix {
   font-size: 0.7em;
 }
+
+@keyframes mdi-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mdi-spin {
+  animation: mdi-spin 2s infinite linear;
+}
