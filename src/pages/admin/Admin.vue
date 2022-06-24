@@ -89,11 +89,4 @@ textarea {
     left: -100%;
   }
 }
-
-@media not all and (max-width: 960px) {
-  .admin .container {
-    width: 1200px;
-    margin: 0 auto;
-  }
-}
 </style>

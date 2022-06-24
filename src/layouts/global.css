@@ -18,6 +18,13 @@ main {
   overflow: auto;
 }
 
+@media not all and (max-width: 960px) {
+  .container {
+    max-width: 1200px;
+    margin: 24px auto;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: inherit;

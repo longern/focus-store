@@ -50,23 +50,3 @@ onBeforeMount(() => {
     </button>
   </Teleport>
 </template>
-
-<style>
-.option {
-  margin-bottom: 24px;
-}
-
-.option-value {
-  margin: 4px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background-color: lightgray;
-  background-clip: padding-box;
-  cursor: pointer;
-  border: 1px solid transparent;
-}
-
-input[type="radio"]:checked + .option-value {
-  border-color: #333;
-}
-</style>
