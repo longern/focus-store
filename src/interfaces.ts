@@ -58,5 +58,14 @@ export const products = <Array<Product>>[
     price: 980,
     images: ["https://picsum.photos/510/300?random"],
     description: "This is a <b>great</b> product.",
+    options: [
+      {
+        name: "Option 1",
+        values: [
+          { text: "Value 1" },
+          { text: "Value 2", priceModifier: "+10" },
+        ],
+      },
+    ],
   },
 ];
