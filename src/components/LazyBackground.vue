@@ -22,25 +22,29 @@ onMounted(() => {
 <template>
   <div class="lazy-background">
     <div
-      v-show="!loaded"
+      v-if="!loaded"
       class="lazy"
       :style="`background-image: url(${props.lazySrc})`"
     ></div>
-    <div v-show="loaded" :style="`background-image: url(${src})`"></div>
+    <div v-if="loaded" :style="`background-image: url(${src})`"></div>
   </div>
 </template>
 
 <style>
+.lazy-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -100;
+}
+
 .lazy-background > div {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: -100;
 }
 
 .lazy-background > div.lazy::before {

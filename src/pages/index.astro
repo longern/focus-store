@@ -12,7 +12,7 @@ import Layout from "@/layouts/NavBar.astro";
       <LazyBackground client:load src={site.coverImage.src} lazySrc={site.coverImage.lazySrc} />
       <div style="text-align: center">
         <div class="site-title">
-          <h1>{site.title}</h1>
+          <span>{site.title}</span>
         </div>
         <a href="/products">
           <button class="btn-normal shop-now">
@@ -73,6 +73,17 @@ import Layout from "@/layouts/NavBar.astro";
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .cover-image .lazy-background {
+    filter: brightness(0.8);
+  }
+
+  .site-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    margin: 1em 0;
   }
 
   .shop-now {
