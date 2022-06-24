@@ -12,6 +12,7 @@ import { cart, isMobile, showSidebar } from "@/composables/states";
 
 const props = defineProps({
   logo: String,
+  rootCategory: Object,
 });
 
 const mounted = ref(false);
@@ -44,7 +45,11 @@ onMounted(() => {
       :is="isMobile ? 'aside' : 'div'"
       :class="['category-menu', showSidebar ? null : 'hide']"
     >
-      <a href="/categories/1">Category 1</a>
+      <a
+        v-for="cata in rootCategory.children"
+        :href="`/categories/${cata.name}`"
+        v-text="cata.name"
+      ></a>
     </component>
 
     <div style="flex-grow: 1"></div>

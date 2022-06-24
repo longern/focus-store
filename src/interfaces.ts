@@ -74,3 +74,14 @@ export interface Category {
   name: string;
   children: Array<Category>;
 }
+
+export const rootCategory = <Category>{ name: "", children: [] };
+
+if (import.meta.env.PUBLIC_SITE) {
+  const response = await fetch(`${import.meta.env.PUBLIC_SITE}/api/categories`);
+  if (
+    response.status == 200 &&
+    response.headers.get("Content-Type") == "application/json"
+  )
+    Object.assign(rootCategory, await response.json());
+}
