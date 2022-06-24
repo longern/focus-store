@@ -65,6 +65,16 @@ button {
   display: inline-flex;
 }
 
+input[type="text"],
+input[type="number"],
+input[type="email"],
+textarea {
+  font-size: 1em;
+  padding: 8px;
+  border: 1px solid darkgray;
+  border-radius: 4px;
+}
+
 .square {
   position: relative;
   padding-top: 100%;

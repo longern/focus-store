@@ -67,16 +67,6 @@ window.addEventListener("resize", () => {
   padding: 12px;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="email"],
-textarea {
-  font-size: 1em;
-  padding: 8px;
-  border: 1px solid darkgray;
-  border-radius: 4px;
-}
-
 @media (max-width: 960px) {
   .admin aside {
     position: fixed;

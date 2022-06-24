@@ -158,16 +158,6 @@ onBeforeMount(() => {
   }
 }
 
-input[type="text"],
-input[type="number"],
-input[type="email"],
-textarea {
-  font-size: 1em;
-  padding: 6px;
-  border: 1px solid darkgray;
-  border-radius: 4px;
-}
-
 textarea {
   box-sizing: border-box;
   min-height: 200px;

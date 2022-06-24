@@ -70,9 +70,11 @@ onMounted(() => {
             </span>
           </button>
         </a>
-        <button class="btn-icon">
-          <SvgIcon type="mdi" :path="mdiAccount"></SvgIcon>
-        </button>
+        <a href="/profile">
+          <button class="btn-icon">
+            <SvgIcon type="mdi" :path="mdiAccount"></SvgIcon>
+          </button>
+        </a>
       </div>
     </div>
   </nav>
