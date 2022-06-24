@@ -70,8 +70,13 @@ onBeforeMount(() => {
       <div class="form-label">
         <span v-text="t('Images')"></span>
         <div class="images">
-          <template v-for="image in product.images">
-            <img :src="image" height="100" width="100" />
+          <template v-for="(image, index) in product.images">
+            <img
+              :src="image"
+              height="100"
+              width="100"
+              @contextmenu.prevent="product.images.splice(index, 1)"
+            />
           </template>
           <label class="add-image">
             <SvgIcon type="mdi" :path="mdiPlus" size="100" />

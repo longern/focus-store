@@ -28,21 +28,23 @@ function removeFromCart(product) {
         <span v-text="`\xA0(${cart.length})`"></span>
       </div>
       <div class="cart-items">
-        <div class="cart-item" v-for="item in cart" :key="item.id">
-          <div class="cart-item-image">
-            <img :src="item.images?.[0]" width="100" height="100" />
-          </div>
-          <div class="cart-item-details">
-            <div class="cart-item-name">{{ item.name }}</div>
-            <div class="cart-item-price">
-              <span class="currency-prefix"></span>
-              <span v-text="item.price"></span>
+        <a v-for="item in cart" :key="item.id" :href="`/products/${item.id}`">
+          <div class="cart-item">
+            <div class="cart-item-image">
+              <img :src="item.images?.[0]" width="100" height="100" />
             </div>
+            <div class="cart-item-details">
+              <div class="cart-item-name">{{ item.name }}</div>
+              <div class="cart-item-price">
+                <span class="currency-prefix"></span>
+                <span v-text="item.price"></span>
+              </div>
+            </div>
+            <button class="btn-icon" @click.prevent="removeFromCart(item)">
+              <SvgIcon type="mdi" :path="mdiClose"></SvgIcon>
+            </button>
           </div>
-          <button class="btn-icon" @click="removeFromCart(item)">
-            <SvgIcon type="mdi" :path="mdiClose"></SvgIcon>
-          </button>
-        </div>
+        </a>
       </div>
     </div>
     <div v-else class="cart-empty">
