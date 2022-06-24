@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { reactive } from "vue";
 import { Category } from "@/interfaces";
-import { mdiClose } from "@mdi/js";
 import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiClose } from "@mdi/js";
+import { reactive, onBeforeMount } from "vue";
 import { useI18n } from "vue-i18n";
 
 const categories = reactive(<Array<Category>>[]);
@@ -18,6 +18,14 @@ function saveCategories() {
     }),
   });
 }
+
+onBeforeMount(() => {
+  fetch("/api/categories")
+    .then((res) => res.json())
+    .then((rootCategory: Category) => {
+      categories.splice(0, categories.length, ...rootCategory.children);
+    });
+});
 </script>
 
 <template>
@@ -25,6 +33,7 @@ function saveCategories() {
   <form @submit.prevent="saveCategories">
     <div>
       <button
+        type="button"
         class="btn-normal primary"
         @click="categories.push({ name: '', children: [] })"
       >
