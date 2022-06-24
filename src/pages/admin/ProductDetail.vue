@@ -118,6 +118,11 @@ onBeforeMount(() => {
               </button>
               <div v-for="value in option.values" class="value-text">
                 <input type="text" v-model="value.text" />
+                <input
+                  type="text"
+                  v-model="value.priceModifier"
+                  :placeholder="t('Price Modifier')"
+                />
               </div>
             </details>
           </div>
