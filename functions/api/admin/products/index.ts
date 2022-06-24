@@ -2,6 +2,7 @@ export async function onRequestPost({ request, env }) {
   try {
     const body = await request.json();
     if (!body.id) body.id = crypto.randomUUID();
+    body.updatedAt = new Date().toISOString();
     const value = JSON.stringify(body);
     await env.NAMESPACE.put(`products:${body.id}`, value);
     return new Response(value);
