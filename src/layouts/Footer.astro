@@ -6,21 +6,21 @@ import { site } from "@/interfaces"
   <a href="/help">Help</a>
 </footer>
 
-<style>
-footer {
-  margin-top: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  background-color: #333;
-  color: #ccc;
-}
-
-@media (max-width: 960px) {
+<style is:inline>
   footer {
-    display: none;
+    margin-top: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    background-color: #333;
+    color: #ccc;
   }
-}
+
+  @media (max-width: 960px) {
+    footer {
+      display: none;
+    }
+  }
 </style>

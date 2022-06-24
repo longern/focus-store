@@ -9,7 +9,7 @@ import Layout from "@/layouts/NavBar.astro";
 <Layout preloads={[{href: site.coverImage.src, as: "image" }]}>
   <main class="home">
     <div class="cover-image">
-      <LazyBackground client:load src={site.coverImage.src} lazySrc={site.coverImage.lazySrc}></LazyBackground>
+      <LazyBackground client:load src={site.coverImage.src} lazySrc={site.coverImage.lazySrc} />
       <div style="text-align: center">
         <div class="site-title">
           <h1>{site.title}</h1>
@@ -57,12 +57,7 @@ import Layout from "@/layouts/NavBar.astro";
   </main>
 </Layout>
 
-<style>
-  nav {
-    display: flex;
-    background-color: white;
-  }
-
+<style is:inline>
   main {
     height: 100%;
     overflow-y: auto;

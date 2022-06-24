@@ -9,7 +9,7 @@ const { products } = Astro.props as { products: Array<Product> };
   {products.map(product => (<ProductCard product={ product }></ProductCard>))}
 </div>
 
-<style is:global>
+<style is:global is:inline>
   .products {
     display: flex;
     margin: 4px;

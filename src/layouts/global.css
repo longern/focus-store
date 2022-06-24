@@ -99,6 +99,7 @@ button {
 .currency-prefix,
 .currency-suffix {
   font-size: 0.7em;
+  margin: 0 0.2em;
 }
 
 @keyframes mdi-spin {

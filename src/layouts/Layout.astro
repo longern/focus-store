@@ -1,11 +1,17 @@
 ---
 import { site } from "@/interfaces";
+import "./global.css"
 
 export interface Props {
   title: string;
   preloads?: Array<{ href: string, as: string }>;
 }
 const { title, preloads = [] } = Astro.props as Props;
+
+const styleVars = {
+  currencyPrefix: `"${site.currencyPrefix}"`,
+  currencySuffix: `"${site.currencySuffix}"`,
+};
 ---
 
 <!DOCTYPE html>
@@ -27,10 +33,7 @@ const { title, preloads = [] } = Astro.props as Props;
 
 </html>
 
-<style is:global define:vars={{ currencyPrefix: `"${site.currencyPrefix}"`, currencySuffix: `"${site.currencySuffix}"`,
-  }}>
-  @import "./global.css";
-
+<style is:global define:vars={styleVars}>
   .currency-prefix::before {
     content: var(--currencyPrefix);
   }
