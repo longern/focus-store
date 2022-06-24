@@ -36,7 +36,7 @@ function uploadLazyImage(imageInput: HTMLInputElement, key: string) {
         body: file,
       })
     )
-    .then((res) => site[key].src = res.url);
+    .then((res) => (site[key].src = res.url));
 
   // Resize image to get thumbnail
   const image = new Image();
@@ -135,16 +135,6 @@ label > span {
   label {
     flex-direction: column;
   }
-}
-
-input[type="text"],
-input[type="number"],
-input[type="email"],
-textarea {
-  font-size: 1em;
-  padding: 6px;
-  border: 1px solid darkgray;
-  border-radius: 4px;
 }
 
 textarea {

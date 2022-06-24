@@ -69,3 +69,8 @@ export const products = <Array<Product>>[
     ],
   },
 ];
+
+export interface Category {
+  name: string;
+  children: Array<Category>;
+}
