@@ -4,7 +4,7 @@ import { mdiClose } from "@mdi/js";
 import { getCurrentInstance } from "vue";
 import { createI18n, useI18n } from "vue-i18n";
 
-import { cart } from "@/composables/states";
+import { cart, isMobile } from "@/composables/states";
 
 const app = getCurrentInstance().appContext.app;
 app.use(
@@ -45,6 +45,13 @@ function removeFromCart(product) {
             </button>
           </div>
         </a>
+      </div>
+      <div style="text-align: right">
+        <Teleport to="#navExtra" :disabled="!isMobile">
+          <a href="/checkout">
+            <button class="btn-normal primary">Checkout</button>
+          </a>
+        </Teleport>
       </div>
     </div>
     <div v-else class="cart-empty">
