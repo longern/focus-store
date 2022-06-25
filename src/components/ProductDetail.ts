@@ -5,15 +5,15 @@ export default defineComponent({
     product: Object,
   },
   render() {
+    if (!this.product?.images) this.product.images = [];
+
     return h("div", { class: "product-detail" }, [
       h("div", { class: "product-general" }, [
         h(
           "div",
           { class: "detail-image" },
-          h(
-            "div",
-            { class: "square" },
-            h("img", { src: this.product?.images?.[0] })
+          this.product.images.map((image) =>
+            h("div", { class: "square" }, h("img", { src: image }))
           )
         ),
         h("div", { class: "detail-text" }, [

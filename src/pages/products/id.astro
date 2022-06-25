@@ -41,6 +41,17 @@ const product = products[0];
     margin: 12px;
   }
 
+  .product-detail .detail-image {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .product-detail .detail-image>* {
+    flex-shrink: 0;
+    scroll-snap-align: center;
+  }
+
   .product-detail .price {
     font-size: 1.5em;
     margin: 8px 0;

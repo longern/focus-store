@@ -56,7 +56,10 @@ export const products = <Array<Product>>[
     id: "id",
     name: "Product 1",
     price: 980,
-    images: ["https://picsum.photos/510/300?random"],
+    images: [
+      "https://picsum.photos/510/300?random",
+      "https://picsum.photos/510/300?random&i=2",
+    ],
     description: "This is a <b>great</b> product.",
     options: [
       {

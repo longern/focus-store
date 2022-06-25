@@ -1,13 +1,23 @@
 <script setup lang="ts">
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiCartPlus } from "@mdi/js";
-import { computed, onBeforeMount, reactive } from "vue";
+import { computed, getCurrentInstance, onBeforeMount, reactive } from "vue";
+import { createI18n, useI18n } from "vue-i18n";
 
 import { cart, isMobile } from "@/composables/states";
 import { Product } from "@/interfaces";
 
+const app = getCurrentInstance().appContext.app;
+app.use(
+  createI18n({
+    locale: navigator.language,
+    fallbackLocale: "en",
+  })
+);
+
 const product = reactive({} as Product);
 const choices = reactive({} as Record<string, string>);
+const { t } = useI18n();
 
 const finalPrice = computed(() => {
   let finalPrice = product.price;
@@ -56,7 +66,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <Teleport v-if="!isMobile" to="#detailActions">
+  <Teleport to="#detailActions">
     <div v-for="option in product.options" class="option">
       <span>{{ option.name }}</span>
       <label v-for="value in option.values">
@@ -72,15 +82,17 @@ onBeforeMount(() => {
       </label>
     </div>
     <button class="btn-normal primary" @click="addToCart">
-      <span>Add to Cart</span>
-    </button>
-  </Teleport>
-  <Teleport v-else to="#navExtra">
-    <button class="btn-icon" @click="addToCart">
-      <SvgIcon type="mdi" :path="mdiCartPlus"></SvgIcon>
+      <span v-text="t('Add to Cart')"></span>
     </button>
   </Teleport>
   <Teleport to=".final-price">
     <span v-text="finalPrice"></span>
   </Teleport>
 </template>
+
+<i18n lang="yaml">
+en:
+  Add to Cart: Add to Cart
+zh-CN:
+  Add to Cart: 加入购物车
+</i18n>
