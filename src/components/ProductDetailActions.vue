@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiCartPlus } from "@mdi/js";
-import { computed, onBeforeMount, reactive } from "vue";
+import { onBeforeMount, reactive } from "vue";
 
 import { cart, isMobile } from "@/composables/states";
 import { Product } from "@/interfaces";
@@ -10,7 +10,14 @@ const product = reactive({} as Product);
 const choices = reactive({});
 
 function addToCart() {
-  cart.value.push(product);
+  cart.value.push({
+    id: product.id,
+    name: product.name,
+    image: product.images?.[0],
+    unitPrice: product.price,
+    quantity: 1,
+    choices: choices,
+  });
 }
 
 onBeforeMount(() => {
