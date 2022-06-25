@@ -29,66 +29,71 @@ function removeFromCart(product) {
 </script>
 
 <template>
-  <main>
-    <div v-if="cart.length" class="container">
-      <div style="font-size: 1.2rem; padding: 8px">
-        <span v-text="t('Cart')"></span>
-        <span v-text="`\xA0(${cart.length})`"></span>
-      </div>
-      <div class="cart-items">
-        <a v-for="item in cart" :key="item.id" :href="`/products/${item.id}`">
-          <div class="cart-item">
-            <div class="cart-item-image">
-              <img :src="item.image" width="100" height="100" />
-            </div>
-            <div class="cart-item-details">
-              <div class="cart-item-name">{{ item.name }}</div>
-              <div class="cart-item-choices">
-                <span v-for="value in item.choices" v-text="value"></span>
-                <span v-text="'\xA0'"></span>
-              </div>
-              <div class="cart-item-price">
-                <span class="currency-prefix"></span>
-                <span v-text="item.unitPrice"></span>
-              </div>
-            </div>
-            <button class="btn-icon" @click.prevent="removeFromCart(item)">
-              <SvgIcon type="mdi" :path="mdiClose"></SvgIcon>
-            </button>
-          </div>
-        </a>
-      </div>
-      <div style="text-align: right">
-        <div class="total-price">
-          <span v-text="t('Total: ')"></span>
-          <span class="currency-prefix"></span>
-          <span v-text="totalPrice"></span>
-        </div>
-        <Teleport to="#navExtra" :disabled="!isMobile">
-          <a href="/checkout">
-            <button class="btn-normal primary">Checkout</button>
-          </a>
-        </Teleport>
-      </div>
+  <div v-if="cart.length" class="container cart">
+    <div style="font-size: 1.2rem; padding: 8px">
+      <span v-text="t('Cart')"></span>
+      <span v-text="`\xA0(${cart.length})`"></span>
     </div>
-    <div v-else class="cart-empty">
-      <div class="cart-empty-text">
-        <span v-text="t('Your cart is empty')"></span>
-      </div>
-      <a href="/products" class="cart-empty-link">
-        <button class="btn-normal primary">
-          <span v-text="t('Continue Shopping')"></span>
-        </button>
+    <div class="cart-items">
+      <a v-for="item in cart" :key="item.id" :href="`/products/${item.id}`">
+        <div class="cart-item">
+          <div class="cart-item-image">
+            <img :src="item.image" width="100" height="100" />
+          </div>
+          <div class="cart-item-details">
+            <div class="cart-item-name">{{ item.name }}</div>
+            <div class="cart-item-choices">
+              <span v-for="value in item.choices" v-text="value"></span>
+              <span v-text="'\xA0'"></span>
+            </div>
+            <div class="cart-item-price">
+              <span class="currency-prefix"></span>
+              <span v-text="item.unitPrice"></span>
+            </div>
+          </div>
+          <div class="cart-item-quantity" @click.prevent>
+            <input type="number" v-model="item.quantity" style="width: 40px" />
+          </div>
+          <button class="btn-icon" @click.prevent="removeFromCart(item)">
+            <SvgIcon type="mdi" :path="mdiClose"></SvgIcon>
+          </button>
+        </div>
       </a>
     </div>
-  </main>
+    <div style="text-align: right">
+      <div class="total-price">
+        <span v-text="t('Total: ')"></span>
+        <span class="currency-prefix"></span>
+        <span v-text="totalPrice"></span>
+      </div>
+      <Teleport to="#navExtra" :disabled="!isMobile">
+        <a href="/checkout">
+          <button class="btn-normal primary">Checkout</button>
+        </a>
+      </Teleport>
+    </div>
+  </div>
+  <div v-else class="cart-empty">
+    <div class="cart-empty-text">
+      <span v-text="t('Your cart is empty')"></span>
+    </div>
+    <a href="/products" class="cart-empty-link">
+      <button class="btn-normal primary">
+        <span v-text="t('Continue Shopping')"></span>
+      </button>
+    </a>
+  </div>
 </template>
 
 <style>
+.cart {
+  padding: 8px;
+}
+
 .cart-item {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.3rem 0;
 }
 
 .cart-item-details {
@@ -100,6 +105,10 @@ function removeFromCart(product) {
   border-radius: 4px;
   overflow: hidden;
   margin-right: 1rem;
+}
+
+.cart-item-quantity {
+  height: 100%;
 }
 
 .total-price {

@@ -19,7 +19,7 @@ export default defineComponent({
         h("div", { class: "detail-text" }, [
           h("div", { class: "price" }, [
             h("span", { class: "currency-prefix" }),
-            h("span", this.product?.price),
+            h("span", { class: "final-price" }, this.product?.price),
           ]),
           h("div", { class: "name" }, this.product?.name),
           h("div", { id: "detailActions" }),

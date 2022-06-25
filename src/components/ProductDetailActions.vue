@@ -1,22 +1,44 @@
 <script setup lang="ts">
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiCartPlus } from "@mdi/js";
-import { onBeforeMount, reactive } from "vue";
+import { computed, onBeforeMount, reactive } from "vue";
 
 import { cart, isMobile } from "@/composables/states";
 import { Product } from "@/interfaces";
 
 const product = reactive({} as Product);
-const choices = reactive({});
+const choices = reactive({} as Record<string, string>);
+
+const finalPrice = computed(() => {
+  let finalPrice = product.price;
+  for (const option of product.options) {
+    const choiceValue = option.values.find(
+      (value) => value.text === choices?.[option.name]
+    );
+    finalPrice += Number(choiceValue?.priceModifier || "0");
+  }
+  return finalPrice;
+});
 
 function addToCart() {
+  for (const item of cart.value) {
+    console.log(JSON.stringify(item.choices), JSON.stringify(choices));
+    if (
+      item.id === product.id &&
+      JSON.stringify(item.choices) === JSON.stringify(choices)
+    ) {
+      item.quantity++;
+      return;
+    }
+  }
+
   cart.value.push({
     id: product.id,
     name: product.name,
     image: product.images?.[0],
-    unitPrice: product.price,
+    unitPrice: finalPrice.value,
     quantity: 1,
-    choices: choices,
+    choices: Object.assign({}, choices),
   });
 }
 
@@ -28,6 +50,8 @@ onBeforeMount(() => {
   for (const option of product.options) {
     choices[option.name] = option.values[0].text;
   }
+
+  document.querySelector(".final-price").textContent = "";
 });
 </script>
 
@@ -55,5 +79,8 @@ onBeforeMount(() => {
     <button class="btn-icon" @click="addToCart">
       <SvgIcon type="mdi" :path="mdiCartPlus"></SvgIcon>
     </button>
+  </Teleport>
+  <Teleport to=".final-price">
+    <span v-text="finalPrice"></span>
   </Teleport>
 </template>
