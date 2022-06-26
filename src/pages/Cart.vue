@@ -2,18 +2,11 @@
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiClose } from "@mdi/js";
 import { computed, getCurrentInstance } from "vue";
-import { createI18n, useI18n } from "vue-i18n";
+import { i18n } from "@/plugins/i18n";
 
 import { cart, isMobile } from "@/composables/states";
 
-const app = getCurrentInstance().appContext.app;
-app.use(
-  createI18n({
-    locale: navigator.language,
-    fallbackLocale: "en",
-  })
-);
-const { t } = useI18n();
+const { t } = i18n(getCurrentInstance());
 
 const totalPrice = computed(() => {
   let total = 0;
@@ -68,7 +61,7 @@ function removeFromCart(product) {
       </div>
       <Teleport to="#navExtra" :disabled="!isMobile">
         <a href="/checkout">
-          <button class="btn-normal primary">Checkout</button>
+          <button class="btn-normal primary" v-text="t('Checkout')"></button>
         </a>
       </Teleport>
     </div>
@@ -134,11 +127,13 @@ function removeFromCart(product) {
 <i18n lang="yaml">
 en:
   Cart: Cart
+  Checkout: Checkout
   Continue Shopping: Continue Shopping
   "Total: ": "Total: "
   Your cart is empty: Your cart is empty
 zh-CN:
   Cart: 购物车
+  Checkout: 结算
   Continue Shopping: 继续购物
   "Total: ": 合计：
   Your cart is empty: 购物车是空的
