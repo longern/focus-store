@@ -1,9 +1,19 @@
 <script setup lang="ts">
+import { onBeforeMount } from "vue";
 import { profile } from "@/composables/states";
+
+onBeforeMount(async () => {
+  const identityResponse = await fetch("/api/users/me");
+  if (identityResponse.ok) {
+    const identity: any = await identityResponse.json();
+    profile.value.username = identity.email;
+  }
+});
 </script>
 
 <template>
   <div class="container">
+    <div v-text="profile.username"></div>
     <form>
       <label for="name">Name</label>
       <input
