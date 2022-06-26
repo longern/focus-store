@@ -16,26 +16,34 @@ import Layout from "@/layouts/NavBar.astro";
         </div>
         <a href="/products">
           <button class="btn-normal shop-now">
-            <span>Shop Now</span>
+            <span>
+              <t>Shop Now</t>
+            </span>
           </button>
         </a>
       </div>
     </div>
     { site.featured?.length ?
     <div class="featured">
-      <h1>Featured</h1>
+      <h1>
+        <t>Featured</t>
+      </h1>
       <Products products={site.featured} />
     </div>
     : null }
     { site.aboutUs ?
     <div class="about-us">
-      <h1>About Us</h1>
+      <h1>
+        <t>About Us</t>
+      </h1>
       { site.aboutUs.split("\n").map(line => (<p>{line}</p>)) }
     </div>
     : null }
     { site.testimonials ?
     <div class="testimonials">
-      <h1>Testimonials</h1>
+      <h1>
+        <t>Testimonials</t>
+      </h1>
       <div class="testimonials-list">
         { site.testimonials.map(testimonial => (
         <div class="testimonial">
@@ -55,6 +63,25 @@ import Layout from "@/layouts/NavBar.astro";
     : null }
     <Footer></Footer>
   </main>
+
+  <i18n is:raw>
+    <pre>
+{
+  "en": {
+    "About Us": "About Us",
+    "Featured": "Featured",
+    "Shop Now": "Shop Now",
+    "Testimonials": "Testimonials"
+  },
+  "zh-CN": {
+    "About Us": "关于我们",
+    "Featured": "推荐商品",
+    "Shop Now": "立即购买",
+    "Testimonials": "客户评价"
+  }
+}
+    </pre>
+  </i18n>
 </Layout>
 
 <style is:inline>

@@ -42,3 +42,31 @@ const styleVars = {
     content: var(--currencySuffix);
   }
 </style>
+
+<style is:inline>
+  i18n {
+    display: none;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    var translate = {};
+    for (var elem of document.querySelectorAll("i18n")) {
+      try {
+        const content = JSON.parse(elem.textContent);
+        Object.entries(content).forEach(([key, value]) => {
+          Object.assign(translate[key] ||= {}, value);
+        });
+      } catch (e) {
+        console.error(e);
+        continue;
+      }
+    }
+
+    const lang = navigator.language;
+    for (var t of document.querySelectorAll("t"))
+      if (translate[lang][t.textContent])
+        t.textContent = translate[lang][t.textContent];
+  })();
+</script>
