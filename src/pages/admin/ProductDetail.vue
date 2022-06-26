@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 import { mdiPlus } from "@mdi/js";
 import SvgIcon from "@jamescoyle/vue-icon";
 
+import Message from "@/components/Message.vue";
 import { Product } from "@/interfaces";
 import { uploadImage } from "@/utils";
 
@@ -13,6 +14,7 @@ const props = defineProps({
 });
 
 const imageInput = ref<HTMLInputElement>(null);
+const message = ref<InstanceType<typeof Message> | null>(null);
 const originalProductName = ref("\xA0");
 const product = reactive({} as Product);
 const saving = ref(false);
@@ -37,6 +39,7 @@ async function saveProduct() {
   }
   originalProductName.value = product.name;
 
+  message.value.show();
   saving.value = false;
 }
 
@@ -140,6 +143,9 @@ onBeforeMount(() => {
         v-text="t('Save')"
       ></button>
     </form>
+    <Message ref="message">
+      <span v-text="t('Saved')"></span>
+    </Message>
   </div>
 </template>
 
@@ -202,6 +208,7 @@ en:
   Options: Options
   Price: Price
   Save: Save
+  Saved: Saved
 zh-CN:
   Description: 描述
   Images: 图片
@@ -210,4 +217,5 @@ zh-CN:
   Options: 选项
   Price: 价格
   Save: 保存
+  Saved: 保存成功
 </i18n>
