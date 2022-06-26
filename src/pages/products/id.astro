@@ -66,22 +66,30 @@ const product = products[0];
     margin: 12px;
   }
 
-  .option {
+  .product-detail .option {
+    display: flex;
+    align-items: center;
     margin: 24px 0;
   }
 
-  .option-value {
+  .product-detail .option-name {
+    width: 128px;
+  }
+
+  .product-detail .option-value {
+    display: inline-block;
     margin: 4px;
     padding: 4px 8px;
     border-radius: 4px;
-    background-color: lightgray;
+    background-color: #eee;
     background-clip: padding-box;
     cursor: pointer;
     border: 1px solid transparent;
+    user-select: none;
   }
 
-  input[type="radio"]:checked+.option-value {
-    border-color: #333;
+  .product-detail input[type="radio"]:checked+.option-value {
+    border-color: gray;
   }
 
   @media not all and (max-width: 960px) {
@@ -96,6 +104,7 @@ const product = products[0];
 
     .product-detail .detail-image {
       width: 600px;
+      flex-shrink: 0;
       margin-right: 24px;
       border-radius: 6px;
       overflow: hidden;
@@ -109,6 +118,11 @@ const product = products[0];
 
     .product-detail .detail-image {
       width: 100%;
+    }
+
+    .product-detail .option {
+      flex-direction: column;
+      align-items: start;
     }
   }
 </style>

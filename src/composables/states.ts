@@ -1,4 +1,5 @@
 import { ref, Ref, watch } from "vue";
+import { Address } from "@/interfaces";
 
 function storeLocal<T>(key: string, variable: Ref<T>) {
   const localStorageItem = localStorage.getItem(key);
@@ -27,16 +28,6 @@ export interface CartItem {
 }
 
 export const cart = storeLocal("focusCart", ref([] as Array<CartItem>));
-
-export interface Address {
-  fullName: string;
-  street: string;
-  district: string;
-  city: string;
-  state: string;
-  country: string;
-  postal: string;
-}
 
 export interface Profile {
   username: string;

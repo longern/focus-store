@@ -1,20 +1,27 @@
 <script setup lang="ts">
-import { getCurrentInstance, ref } from "vue";
+import { getCurrentInstance, reactive, ref } from "vue";
 import { i18n } from "@/plugins/i18n";
 
 import { Address, cart, profile } from "@/composables/states";
+import { Order } from "@/interfaces";
 
-const address = ref(
-  profile.value.addresses.length ? profile.value.addresses[0] : ({} as Address)
-);
-const orderNote = ref("");
+const order = reactive({} as Order);
+order.address = profile.value.addresses.length
+  ? profile.value.addresses[0]
+  : ({} as Address);
 const setAddressAsDefault = ref(profile.value.addresses.length === 0);
 const { t } = i18n(getCurrentInstance());
 
 async function checkout() {
   if (setAddressAsDefault.value) {
-    profile.value.addresses.splice(0, 0, address.value);
+    profile.value.addresses.splice(0, 0, order.address);
   }
+
+  await fetch("/api/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(order),
+  });
 }
 </script>
 <template>
@@ -25,48 +32,48 @@ async function checkout() {
         type="text"
         class="form-control"
         id="name"
-        v-model="address.fullName"
+        v-model="order.address.fullName"
       /><br />
       <label for="street">Street</label>
       <input
         type="text"
         id="street"
-        v-model="address.street"
+        v-model="order.address.street"
         autocomplete="street-address"
       /><br />
       <label for="district">District</label>
       <input
         type="text"
         id="district"
-        v-model="address.district"
+        v-model="order.address.district"
         autocomplete="address-level3"
       /><br />
       <label for="city">City</label>
       <input
         type="text"
         id="city"
-        v-model="address.city"
+        v-model="order.address.city"
         autocomplete="address-level2"
       /><br />
       <label for="state">State</label>
       <input
         type="text"
         id="state"
-        v-model="address.state"
+        v-model="order.address.state"
         autocomplete="address-level1"
       /><br />
       <label for="country">Country/Region</label>
       <input
         type="text"
         id="country"
-        v-model="address.country"
+        v-model="order.address.country"
         autocomplete="country-name"
       /><br />
       <label for="postal">Postal</label>
       <input
         type="text"
         id="postal"
-        v-model="address.postal"
+        v-model="order.address.postal"
         autocomplete="postal-code"
       /><br />
       <label for="setAddressAsDefault"> Set as default </label>
@@ -76,7 +83,7 @@ async function checkout() {
         v-model="setAddressAsDefault"
       /><br />
     </form>
-    <textarea v-model="orderNote"></textarea>
+    <textarea v-model="order.note"></textarea>
     <button class="btn-normal primary" @click="checkout">
       <span v-text="t('Checkout')"></span>
     </button>

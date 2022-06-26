@@ -1,3 +1,13 @@
+export interface Address {
+  fullName: string;
+  street: string;
+  district: string;
+  city: string;
+  state: string;
+  country: string;
+  postal: string;
+}
+
 export interface Site {
   title: string;
   logo: string;
@@ -87,4 +97,17 @@ if (import.meta.env.PUBLIC_SITE) {
     response.headers.get("Content-Type") == "application/json"
   )
     Object.assign(rootCategory, await response.json());
+}
+
+export interface Order {
+  id: string;
+  products: Array<{
+    id: string;
+    name: string;
+    choices: Record<string, string>;
+    unitPrice: number;
+    quantity: number;
+  }>;
+  note: string;
+  address: Address;
 }

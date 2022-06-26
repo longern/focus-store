@@ -68,18 +68,20 @@ onBeforeMount(() => {
 <template>
   <Teleport to="#detailActions">
     <div v-for="option in product.options" class="option">
-      <span>{{ option.name }}</span>
-      <label v-for="value in option.values">
-        <input
-          v-model="choices[option.name]"
-          :value="value.text"
-          type="radio"
-          hidden
-        />
-        <span class="option-value">
-          <span v-text="value.text"></span>
-        </span>
-      </label>
+      <div class="option-name">{{ option.name }}</div>
+      <div>
+        <label v-for="value in option.values">
+          <input
+            v-model="choices[option.name]"
+            :value="value.text"
+            type="radio"
+            hidden
+          />
+          <div class="option-value">
+            <span v-text="value.text"></span>
+          </div>
+        </label>
+      </div>
     </div>
     <button class="btn-normal primary" @click="addToCart">
       <span v-text="t('Add to Cart')"></span>
