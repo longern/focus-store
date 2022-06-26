@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script>
+    var to = new URLSearchParams(window.location.search).get('to');
+    window.location.replace(decodeURIComponent(to));
+  </script>
+</head>
+
+</html>

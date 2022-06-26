@@ -13,6 +13,8 @@ onBeforeMount(async () => {
 
 <template>
   <div class="container">
+    <div><a href="/me/redirect?to=%2Fprofile">Login</a></div>
+    <div><a href="/cdn-cgi/access/logout">Logout</a></div>
     <div v-text="profile.username"></div>
     <form>
       <label for="name">Name</label>
