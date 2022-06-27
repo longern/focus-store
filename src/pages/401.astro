@@ -1,0 +1,32 @@
+---
+import NavBar from '@/layouts/NavBar.astro';
+
+const i18n = {
+  "en": {
+    "Login": "Login",
+  },
+  "zh-CN": {
+    "Login": "登录",
+  },
+};
+---
+
+<NavBar title="Login">
+  <main>
+    <a href="/me">
+      <button class="btn-normal primary">
+        <t>Login</t>
+      </button>
+    </a>
+  </main>
+
+  <i18n set:text={JSON.stringify(i18n)}></i18n>
+</NavBar>
+
+<style>
+  main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
