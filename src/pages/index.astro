@@ -4,6 +4,21 @@ import Products from "@/components/Products.astro";
 import { site } from "@/interfaces";
 import Footer from "@/layouts/Footer.astro";
 import Layout from "@/layouts/NavBar.astro";
+
+const i18n = {
+  "en": {
+    "About Us": "About Us",
+    "Featured": "Featured",
+    "Shop Now": "Shop Now",
+    "Testimonials": "Testimonials",
+  },
+  "zh-CN": {
+    "About Us": "关于我们",
+    "Featured": "推荐商品",
+    "Shop Now": "立即购买",
+    "Testimonials": "客户评价",
+  },
+};
 ---
 
 <Layout preloads={[{href: site.coverImage.src, as: "image" }]}>
@@ -64,24 +79,7 @@ import Layout from "@/layouts/NavBar.astro";
     <Footer></Footer>
   </main>
 
-  <i18n is:raw>
-    <pre>
-{
-  "en": {
-    "About Us": "About Us",
-    "Featured": "Featured",
-    "Shop Now": "Shop Now",
-    "Testimonials": "Testimonials"
-  },
-  "zh-CN": {
-    "About Us": "关于我们",
-    "Featured": "推荐商品",
-    "Shop Now": "立即购买",
-    "Testimonials": "客户评价"
-  }
-}
-    </pre>
-  </i18n>
+  <i18n set:text={JSON.stringify(i18n)} />
 </Layout>
 
 <style is:inline>
