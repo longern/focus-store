@@ -21,10 +21,10 @@ const i18n = {
 };
 ---
 
-<Layout preloads={[{href: site.coverImage.src, as: "image" }]}>
+<Layout preloads={[{href: site.coverImage?.src, as: "image" }]}>
   <main class="home">
     <div class="cover-image">
-      <LazyBackground client:load src={site.coverImage.src} lazySrc={site.coverImage.lazySrc} />
+      <LazyBackground client:load src={site.coverImage?.src} lazySrc={site.coverImage?.lazySrc} />
       <div style="text-align: center">
         <div class="site-title">
           <span>{site.title}</span>

@@ -35,12 +35,17 @@ export const site = {} as Site;
 
 if (import.meta.env.PUBLIC_SITE) {
   console.log("[Focus] Fetching site data");
-  const response = await fetch(`${import.meta.env.PUBLIC_SITE}/api/site`);
-  if (
-    response.status == 200 &&
-    response.headers.get("Content-Type") == "application/json"
-  )
-    Object.assign(site, await response.json());
+  await fetch(`${import.meta.env.PUBLIC_SITE}/api/site`)
+    .then(async (response) => {
+      if (
+        response.status == 200 &&
+        response.headers.get("Content-Type") == "application/json"
+      )
+        Object.assign(site, await response.json());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export interface ProductOption {

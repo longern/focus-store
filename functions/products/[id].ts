@@ -1,7 +1,7 @@
 import { h } from "vue";
 import { renderToString } from "vue/server-renderer";
 
-import ProductDetail from "../../src/components/ProductDetail";
+import ProductDetail from "@/components/ProductDetail";
 
 class ProductsInjector {
   product: any;
