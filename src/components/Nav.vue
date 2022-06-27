@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
-import {
-  mdiAccount,
-  mdiCart,
-  mdiFormatListBulleted,
-  mdiTwitter,
-} from "@mdi/js";
+import { mdiAccount, mdiCart, mdiFormatListBulleted } from "@mdi/js";
 
 import { cart, isMobile, showSidebar } from "@/composables/states";
 
@@ -56,9 +51,7 @@ onMounted(() => {
     <div>
       <div class="social-media">
         <div style="flex-grow: 1"></div>
-        <button class="btn-icon">
-          <SvgIcon type="mdi" :path="mdiTwitter"></SvgIcon>
-        </button>
+        <div id="socialIcons"></div>
       </div>
       <div style="display: flex; align-items: center">
         <div style="flex-grow: 1"></div>
@@ -139,6 +132,7 @@ nav > a {
 
 .social-media {
   display: flex;
+  height: 24px;
 }
 
 .social-media .btn-icon {

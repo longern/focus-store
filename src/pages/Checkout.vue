@@ -2,8 +2,8 @@
 import { getCurrentInstance, reactive, ref } from "vue";
 import { i18n } from "@/plugins/i18n";
 
-import { Address, cart, profile } from "@/composables/states";
-import { Order } from "@/interfaces";
+import { cart, profile } from "@/composables/states";
+import { Address, Order } from "@/interfaces";
 
 const order = reactive({} as Order);
 order.address = profile.value.addresses.length
@@ -83,17 +83,26 @@ async function checkout() {
         v-model="setAddressAsDefault"
       /><br />
     </form>
-    <textarea v-model="order.note"></textarea>
-    <button class="btn-normal primary" @click="checkout">
-      <span v-text="t('Checkout')"></span>
-    </button>
+    <div>
+      <textarea v-model="order.note"></textarea>
+    </div>
+    <div>
+      <button class="btn-normal primary" @click="checkout">
+        <span v-text="t('Checkout')"></span>
+      </button>
+    </div>
   </div>
 </template>
 
-<style>
+<style is:global>
 .checkout label {
   display: inline-block;
   width: 140px;
+}
+
+.checkout textarea {
+  box-sizing: border-box;
+  width: 100%;
 }
 </style>
 
