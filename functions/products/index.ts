@@ -22,21 +22,53 @@ class ProductsInjector {
   }
 }
 
-export async function onRequest({ env, next }) {
-  try {
-    const { keys: productKeys } = await env.NAMESPACE.list({
-      prefix: "products:",
-    });
-    const products = await Promise.all(
-      productKeys.map(async (key) =>
-        JSON.parse(await env.NAMESPACE.get(key.name))
-      )
-    );
+async function fetchProducts({ request, env, waitUntil }) {
+  const cache = await caches.open("focus");
+  const cachedResponse = await cache.match(request);
 
-    const res: Response = await next();
-    return new HTMLRewriter()
+  const lastModified = await env.NAMESPACE.get("products/Last-Modified");
+  if (
+    cachedResponse &&
+    lastModified &&
+    new Date(cachedResponse.headers.get("date")) >= new Date(lastModified)
+  )
+    return cachedResponse;
+
+  const { keys } = await env.NAMESPACE.list({ prefix: "products:" });
+  const products = await Promise.all(
+    keys.map(async (key: { name: string }) =>
+      JSON.parse(await env.NAMESPACE.get(key.name))
+    )
+  );
+  const response = new Response(JSON.stringify(products), {
+    headers: {
+      "Content-Type": "application/json",
+      date: new Date().toUTCString(),
+    },
+  });
+
+  waitUntil(cache.put(request, response.clone()));
+
+  return response;
+}
+
+export async function onRequest({ request, env, waitUntil, next }) {
+  try {
+    const apiUrl = new URL("/api/products", request.url);
+    const productRequest = new Request(apiUrl);
+    const productsResponse = await fetchProducts({
+      request: productRequest,
+      env,
+      waitUntil,
+    });
+    const products = await productsResponse.json();
+
+    const response: Response = await next();
+    const rewrittenResponse = new HTMLRewriter()
       .on(".products", new ProductsInjector(products))
-      .transform(res);
+      .transform(response);
+
+    return rewrittenResponse;
   } catch (err) {
     return new Response(err.toString());
   }
