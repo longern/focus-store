@@ -57,6 +57,7 @@ onBeforeMount(() => {
     atob(document.querySelector("focus-data").textContent)
   );
   Object.assign(product, JSON.parse(productData));
+  product.options ||= [];
   for (const option of product.options) {
     choices[option.name] = option.values[0].text;
   }
