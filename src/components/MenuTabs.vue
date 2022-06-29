@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+const props = defineProps({
+  contentPadding: {
+    type: Boolean,
+    default: true,
+  },
+});
+
 const activeTab = ref(0);
 const showContent = ref(false);
 </script>
@@ -19,7 +26,12 @@ const showContent = ref(false);
         <span class="menu-tabs-title-text" v-text="node.props.title"></span>
       </div>
     </div>
-    <div :class="['menu-tabs-content', { show: showContent }]">
+    <div
+      :class="[
+        'menu-tabs-content',
+        { show: showContent, 'content-padding': props.contentPadding },
+      ]"
+    >
       <slot />
       <div class="menu-tabs-content-close" @click="showContent = false">❌</div>
     </div>
@@ -65,6 +77,11 @@ const showContent = ref(false);
 .menu-tabs-content {
   flex-grow: 1;
   position: relative;
+}
+
+.menu-tabs-content.content-padding {
+  box-sizing: border-box;
+  padding: 12px;
 }
 
 .menu-tabs-content-close {
