@@ -32,7 +32,6 @@ const finalPrice = computed(() => {
 
 function addToCart() {
   for (const item of cart.value) {
-    console.log(JSON.stringify(item.choices), JSON.stringify(choices));
     if (
       item.id === product.id &&
       JSON.stringify(item.choices) === JSON.stringify(choices)

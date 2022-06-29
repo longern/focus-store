@@ -1,7 +1,8 @@
 import { h } from "vue";
 import { renderToString } from "vue/server-renderer";
 
-import ProductCard from "../../src/components/ProductCard";
+import ProductCard from "@/components/ProductCard";
+import { viewList } from "@/plugins/functions/restful";
 
 class ProductsInjector {
   products: any;
@@ -22,41 +23,11 @@ class ProductsInjector {
   }
 }
 
-async function fetchProducts({ request, env, waitUntil }) {
-  const cache = await caches.open("focus");
-  const cachedResponse = await cache.match(request);
-
-  const lastModified = await env.NAMESPACE.get("products/Last-Modified");
-  if (
-    cachedResponse &&
-    lastModified &&
-    new Date(cachedResponse.headers.get("date")) >= new Date(lastModified)
-  )
-    return cachedResponse;
-
-  const { keys } = await env.NAMESPACE.list({ prefix: "products:" });
-  const products = await Promise.all(
-    keys.map(async (key: { name: string }) =>
-      JSON.parse(await env.NAMESPACE.get(key.name))
-    )
-  );
-  const response = new Response(JSON.stringify(products), {
-    headers: {
-      "Content-Type": "application/json",
-      date: new Date().toUTCString(),
-    },
-  });
-
-  waitUntil(cache.put(request, response.clone()));
-
-  return response;
-}
-
 export async function onRequest({ request, env, waitUntil, next }) {
   try {
     const apiUrl = new URL("/api/products", request.url);
     const productRequest = new Request(apiUrl);
-    const productsResponse = await fetchProducts({
+    const productsResponse = await viewList({
       request: productRequest,
       env,
       waitUntil,
