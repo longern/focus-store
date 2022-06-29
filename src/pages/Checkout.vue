@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { getCurrentInstance, reactive, ref } from "vue";
 import { i18n } from "@/plugins/i18n";
+import { getCurrentInstance, reactive, ref } from "vue";
 
-import { cart, profile } from "@/composables/states";
+import MenuTab from "@/components/MenuTab.vue";
+import MenuTabs from "@/components/MenuTabs.vue";
+import { profile } from "@/composables/states";
 import { Address, Order } from "@/interfaces";
 
 const order = reactive({} as Order);
@@ -24,68 +26,77 @@ async function checkout() {
   });
 }
 </script>
+
 <template>
   <div class="container checkout">
-    <form>
-      <label for="name">Name</label>
-      <input
-        type="text"
-        class="form-control"
-        id="name"
-        v-model="order.address.fullName"
-      /><br />
-      <label for="street">Street</label>
-      <input
-        type="text"
-        id="street"
-        v-model="order.address.street"
-        autocomplete="street-address"
-      /><br />
-      <label for="district">District</label>
-      <input
-        type="text"
-        id="district"
-        v-model="order.address.district"
-        autocomplete="address-level3"
-      /><br />
-      <label for="city">City</label>
-      <input
-        type="text"
-        id="city"
-        v-model="order.address.city"
-        autocomplete="address-level2"
-      /><br />
-      <label for="state">State</label>
-      <input
-        type="text"
-        id="state"
-        v-model="order.address.state"
-        autocomplete="address-level1"
-      /><br />
-      <label for="country">Country/Region</label>
-      <input
-        type="text"
-        id="country"
-        v-model="order.address.country"
-        autocomplete="country-name"
-      /><br />
-      <label for="postal">Postal</label>
-      <input
-        type="text"
-        id="postal"
-        v-model="order.address.postal"
-        autocomplete="postal-code"
-      /><br />
-      <label for="setAddressAsDefault"> Set as default </label>
-      <input
-        type="checkbox"
-        id="setAddressAsDefault"
-        v-model="setAddressAsDefault"
-      /><br />
-    </form>
-    <div>
-      <textarea v-model="order.note"></textarea>
-    </div>
+    <MenuTabs>
+      <MenuTab :title="t('Address')">
+        <div>
+          <form>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              v-model="order.address.fullName"
+            /><br />
+            <label for="street">Street</label>
+            <input
+              type="text"
+              id="street"
+              v-model="order.address.street"
+              autocomplete="street-address"
+            /><br />
+            <label for="district">District</label>
+            <input
+              type="text"
+              id="district"
+              v-model="order.address.district"
+              autocomplete="address-level3"
+            /><br />
+            <label for="city">City</label>
+            <input
+              type="text"
+              id="city"
+              v-model="order.address.city"
+              autocomplete="address-level2"
+            /><br />
+            <label for="state">State</label>
+            <input
+              type="text"
+              id="state"
+              v-model="order.address.state"
+              autocomplete="address-level1"
+            /><br />
+            <label for="country">Country/Region</label>
+            <input
+              type="text"
+              id="country"
+              v-model="order.address.country"
+              autocomplete="country-name"
+            /><br />
+            <label for="postal">Postal</label>
+            <input
+              type="text"
+              id="postal"
+              v-model="order.address.postal"
+              autocomplete="postal-code"
+            /><br />
+            <label for="setAddressAsDefault"> Set as default </label>
+            <input
+              type="checkbox"
+              id="setAddressAsDefault"
+              v-model="setAddressAsDefault"
+            /><br />
+          </form>
+        </div>
+      </MenuTab>
+      <MenuTab :title="t('Other information')">
+        <div>
+          <textarea v-model="order.note"></textarea>
+        </div>
+      </MenuTab>
+    </MenuTabs>
     <div>
       <button class="btn-normal primary" @click="checkout">
         <span v-text="t('Checkout')"></span>
@@ -108,7 +119,11 @@ async function checkout() {
 
 <i18n lang="yaml">
 en:
+  Address: Address
   Checkout: Checkout
+  Other information: Other information
 zh-CN:
+  Address: 地址
   Checkout: 确认订单
+  Other information: 其它信息
 </i18n>
