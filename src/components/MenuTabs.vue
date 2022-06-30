@@ -15,16 +15,18 @@ const showContent = ref(false);
 <template>
   <div class="menu-tabs">
     <div class="menu-tabs-titles">
-      <div
-        v-for="(node, index) in $slots.default()"
-        :class="['menu-tabs-title', { active: activeTab === index }]"
-        @click="
-          activeTab = index;
-          showContent = true;
-        "
-      >
-        <span class="menu-tabs-title-text" v-text="node.props.title"></span>
-      </div>
+      <template v-for="(node, index) in $slots.default()">
+        <div
+          v-if="node.props?.title"
+          :class="['menu-tabs-title', { active: activeTab === index }]"
+          @click="
+            activeTab = index;
+            showContent = true;
+          "
+        >
+          <span class="menu-tabs-title-text" v-text="node.props.title"></span>
+        </div>
+      </template>
     </div>
     <div
       :class="[

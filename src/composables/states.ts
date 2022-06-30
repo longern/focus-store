@@ -27,19 +27,25 @@ export interface CartItem {
   quantity: number;
 }
 
+export interface Measurements {
+  height: string;
+  weight: string;
+  chest: string;
+}
+
 export const cart = storeLocal("focusCart", ref([] as Array<CartItem>));
 
 export interface Profile {
   username: string;
   addresses: Array<Address>;
+  measurements: Measurements;
 }
 
-export const profile = storeLocal(
-  "focusProfile",
-  ref({
-    addresses: [{} as Address],
-  } as Profile)
-);
+export const profile = storeLocal("focusProfile", ref({} as Profile));
+
+if (!profile.value.measurements)
+  profile.value.measurements = {} as Measurements;
+if (!profile.value.addresses) profile.value.addresses = [{} as Address];
 
 export const isMobile = ref(false);
 
