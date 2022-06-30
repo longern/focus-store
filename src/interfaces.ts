@@ -116,4 +116,6 @@ export interface Order {
   }>;
   note: string;
   address: Address;
+  status: string;
+  createdAt: string;
 }
