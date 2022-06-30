@@ -103,12 +103,14 @@ const showContent = ref(false);
 
   .menu-tabs-content {
     position: fixed;
+    top: 0;
     left: 100%;
     width: 100%;
     height: 100%;
-    transition: left 0.2s ease-in-out;
+    overflow-y: auto;
     z-index: 1;
     background-color: whitesmoke;
+    transition: left 0.2s ease-in-out;
   }
 
   .menu-tabs-content.show {

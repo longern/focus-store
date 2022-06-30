@@ -47,6 +47,11 @@ button {
   color: white;
 }
 
+.btn-normal.danger {
+  background-color: #e53e3e;
+  color: white;
+}
+
 .btn-normal:hover {
   opacity: 0.8;
 }
