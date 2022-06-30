@@ -9,7 +9,7 @@ const categories = reactive(<Array<Category>>[]);
 const { t } = useI18n();
 
 function saveCategories() {
-  fetch("/api/admin/categories", {
+  fetch("/admin/api/categories", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

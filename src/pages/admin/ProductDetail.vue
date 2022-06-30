@@ -25,7 +25,7 @@ const router = useRouter();
 async function saveProduct() {
   saving.value = true;
 
-  const response = await fetch("/api/admin/products", {
+  const response = await fetch("/admin/api/products", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
