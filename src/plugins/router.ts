@@ -10,6 +10,7 @@ if (typeof window !== "undefined") {
   router = createRouter({
     history: createWebHashHistory(),
     routes: [
+      { name: "home", path: "/", redirect: "/website" },
       { name: "website", path: "/website", component: Website },
       { name: "products", path: "/products", component: Products },
       { name: "categories", path: "/categories", component: Categories },
