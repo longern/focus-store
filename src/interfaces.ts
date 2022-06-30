@@ -62,6 +62,7 @@ export interface Product {
   name: string;
   price: number;
   images: Array<string>;
+  category: string;
   description: string;
   options: Array<ProductOption>;
 }
