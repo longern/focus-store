@@ -24,31 +24,34 @@ onMounted(() => {
 
 <template>
   <nav>
-    <a href="/">
-      <img class="logo" :src="props.logo" width="72" height="72" />
-    </a>
-    <button
-      v-if="isMobile"
-      class="btn-icon toggle-siderbar"
-      @click="showSidebar = !showSidebar"
-    >
-      <SvgIcon type="mdi" :path="mdiFormatListBulleted" />
-    </button>
-    <div style="flex-grow: 1"></div>
+    <div style="display: flex; flex-grow: 1; flex-basis: 0">
+      <button
+        v-if="isMobile"
+        class="btn-icon toggle-siderbar"
+        @click="showSidebar = !showSidebar"
+      >
+        <SvgIcon type="mdi" :path="mdiFormatListBulleted" />
+      </button>
+      <a href="/" style="display: inline-flex">
+        <img class="logo" :src="props.logo" width="72" height="72" />
+      </a>
+    </div>
 
-    <component
-      :is="isMobile ? 'aside' : 'div'"
-      :class="['category-menu', showSidebar ? null : 'hide']"
-    >
-      <a
-        v-for="cata in rootCategory.children"
-        :href="`/categories/${cata.name}`"
-        v-text="cata.name"
-      ></a>
-    </component>
+    <div style="display: flex">
+      <div style="flex-grow: 1"></div>
+      <component
+        :is="isMobile ? 'aside' : 'div'"
+        :class="['category-menu', showSidebar ? null : 'hide']"
+      >
+        <a
+          v-for="cata in rootCategory.children"
+          :href="`/categories/${cata.name}`"
+          v-text="cata.name"
+        ></a>
+      </component>
+    </div>
 
-    <div style="flex-grow: 1"></div>
-    <div>
+    <div style="flex-grow: 1; flex-basis: 0">
       <div class="social-media">
         <div style="flex-grow: 1"></div>
         <div id="socialIcons"></div>
