@@ -19,11 +19,18 @@ async function checkout() {
     profile.value.addresses.splice(0, 0, order.address);
   }
 
-  await fetch("/api/orders", {
-    method: "POST",
+  const response = await fetch("/api/orders", {
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(order),
   });
+
+  const orderId = (await response.json()).id;
+
+  window.location.href = new URL(
+    `/pay?order=${orderId}`,
+    window.location.origin
+  ).toString();
 }
 </script>
 
