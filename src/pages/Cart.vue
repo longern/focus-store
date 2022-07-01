@@ -33,19 +33,27 @@ function removeFromCart(product) {
           <div class="cart-item-image">
             <img :src="item.image" width="100" height="100" />
           </div>
-          <div class="cart-item-details">
+          <div class="cart-item-text">
             <div class="cart-item-name">{{ item.name }}</div>
-            <div class="cart-item-choices">
-              <span v-for="value in item.choices" v-text="value"></span>
-              <span v-text="'\xA0'"></span>
+            <div style="display: flex">
+              <div class="cart-item-details">
+                <div class="cart-item-choices">
+                  <span v-for="value in item.choices" v-text="value"></span>
+                  <span v-text="'\xA0'"></span>
+                </div>
+                <div class="cart-item-price">
+                  <span class="currency-prefix"></span>
+                  <span v-text="item.unitPrice"></span>
+                </div>
+              </div>
+              <div class="cart-item-quantity" @click.prevent>
+                <input
+                  type="number"
+                  v-model="item.quantity"
+                  style="width: 40px"
+                />
+              </div>
             </div>
-            <div class="cart-item-price">
-              <span class="currency-prefix"></span>
-              <span v-text="item.unitPrice"></span>
-            </div>
-          </div>
-          <div class="cart-item-quantity" @click.prevent>
-            <input type="number" v-model="item.quantity" style="width: 40px" />
           </div>
           <button class="btn-icon" @click.prevent="removeFromCart(item)">
             <SvgIcon type="mdi" :path="mdiClose"></SvgIcon>
@@ -89,15 +97,42 @@ function removeFromCart(product) {
   padding: 0.3rem 0;
 }
 
-.cart-item-details {
-  flex-grow: 1;
-}
-
 .cart-item-image {
+  flex-shrink: 0;
   display: flex;
   border-radius: 4px;
   overflow: hidden;
   margin-right: 1rem;
+}
+
+.cart-item-text {
+  flex-grow: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  justify-content: space-evenly;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.cart-item-name {
+  display: -webkit-box;
+  line-height: 1.2em;
+  min-height: 2.4em;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cart-item-choices {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cart-item-quantity {
