@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { i18n } from "@/plugins/i18n";
-import { getCurrentInstance, reactive, ref } from "vue";
+import { computed, getCurrentInstance, reactive, ref } from "vue";
 
 import MenuTab from "@/components/MenuTab.vue";
 import MenuTabs from "@/components/MenuTabs.vue";
-import { profile } from "@/composables/states";
+import { cart, profile } from "@/composables/states";
 import { Address, Order } from "@/interfaces";
 
 const order = reactive({} as Order);
@@ -13,6 +13,14 @@ order.address = profile.value.addresses.length
   : ({} as Address);
 const setAddressAsDefault = ref(profile.value.addresses.length === 0);
 const { t } = i18n(getCurrentInstance());
+
+const totalPrice = computed(() => {
+  let total = 0;
+  for (const item of cart.value) {
+    total += item.unitPrice * item.quantity;
+  }
+  return total;
+});
 
 async function checkout() {
   if (setAddressAsDefault.value) {
@@ -25,7 +33,7 @@ async function checkout() {
     body: JSON.stringify(order),
   });
 
-  const orderId = (await response.json()).id;
+  const orderId = ((await response.json()) as Order).id;
 
   window.location.href = new URL(
     `/pay?order=${orderId}`,
@@ -36,6 +44,33 @@ async function checkout() {
 
 <template>
   <div class="container checkout">
+    <div class="order-items">
+      <div v-for="item in cart" :key="item.id">
+        <div class="order-item">
+          <div class="order-item-image">
+            <img :src="item.image" width="100" height="100" />
+          </div>
+          <div class="order-item-text">
+            <div class="order-item-name">{{ item.name }}</div>
+            <div style="display: flex">
+              <div class="order-item-details">
+                <div class="order-item-choices">
+                  <span v-for="value in item.choices" v-text="value"></span>
+                  <span v-text="'\xA0'"></span>
+                </div>
+                <div class="order-item-price">
+                  <span class="currency-prefix"></span>
+                  <span v-text="item.unitPrice"></span>
+                </div>
+              </div>
+              <div class="order-item-quantity" @click.prevent>
+                <span v-text="`x${item.quantity}`" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <MenuTabs>
       <MenuTab :title="t('Address')">
         <div>
@@ -89,7 +124,7 @@ async function checkout() {
               v-model="order.address.postal"
               autocomplete="postal-code"
             /><br />
-            <label for="setAddressAsDefault"> Set as default </label>
+            <label for="setAddressAsDefault">Set as default</label>
             <input
               type="checkbox"
               id="setAddressAsDefault"
@@ -100,11 +135,17 @@ async function checkout() {
       </MenuTab>
       <MenuTab :title="t('Other information')">
         <div>
-          <textarea v-model="order.note"></textarea>
+          <label for="note">Note</label>
+          <textarea id="note" v-model="order.note"></textarea>
         </div>
       </MenuTab>
     </MenuTabs>
-    <div>
+    <div style="margin-top: 16px; text-align: right">
+      <span style="margin-right: 8px">
+        <span v-text="t('Total: ')"></span>
+        <span class="currency-prefix"></span>
+        <span v-text="totalPrice"></span>
+      </span>
       <button class="btn-normal primary" @click="checkout">
         <span v-text="t('Checkout')"></span>
       </button>
@@ -113,6 +154,58 @@ async function checkout() {
 </template>
 
 <style is:global>
+.checkout {
+  padding: 8px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  padding: 0.3rem 0;
+}
+
+.order-item-image {
+  flex-shrink: 0;
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 1rem;
+}
+
+.order-item-text {
+  flex-grow: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  justify-content: space-evenly;
+}
+
+.order-item-details {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.order-item-name {
+  display: -webkit-box;
+  line-height: 1.2em;
+  min-height: 2.4em;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.order-item-choices {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.order-item-quantity {
+  height: 100%;
+}
+
 .checkout label {
   display: inline-block;
   width: 140px;
@@ -129,8 +222,10 @@ en:
   Address: Address
   Checkout: Checkout
   Other information: Other information
+  "Total: ": "Total: "
 zh-CN:
   Address: 地址
   Checkout: 确认订单
   Other information: 其它信息
+  "Total: ": 合计：
 </i18n>
