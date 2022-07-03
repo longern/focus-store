@@ -35,9 +35,11 @@ export async function onRequest({ request, env, waitUntil, next }) {
     });
     const products: Array<Product> = await productsResponse.json();
 
-    const category = request.url.replace(/.*?\/categories\//, "");
-    const filteredProducts = products.filter(
-      (product) => product.category === category
+    const category = decodeURIComponent(
+      request.url.replace(/.*?\/categories\//, "").replace(/\/?$/, "/")
+    );
+    const filteredProducts = products.filter((product) =>
+      product.category.startsWith(category)
     );
 
     const req = new Request(`${new URL(request.url).origin}/products.html`, {

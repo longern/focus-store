@@ -102,6 +102,10 @@ onBeforeMount(() => {
         <span v-text="t('Description')"></span>
         <textarea v-model="product.description"></textarea>
       </label>
+      <label class="form-label">
+        <span v-text="t('Category')"></span>
+        <input v-model="product.category" />
+      </label>
       <div class="form-label">
         <span v-text="t('Options')"></span>
         <div>
@@ -201,6 +205,7 @@ summary {
 
 <i18n lang="yaml">
 en:
+  Category: Category
   Description: Description
   Images: Images
   Name: Name
@@ -210,6 +215,7 @@ en:
   Save: Save
   Saved: Saved
 zh-CN:
+  Category: 分类
   Description: 描述
   Images: 图片
   Name: 名称
