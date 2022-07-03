@@ -49,6 +49,8 @@ function removeFromCart(product) {
               <div class="cart-item-quantity" @click.prevent>
                 <input
                   type="number"
+                  min="1"
+                  step="1"
                   v-model="item.quantity"
                   style="width: 40px"
                 />

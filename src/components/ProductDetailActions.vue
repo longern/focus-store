@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiCartPlus } from "@mdi/js";
-import { computed, getCurrentInstance, onBeforeMount, reactive } from "vue";
+import {
+  computed,
+  getCurrentInstance,
+  onBeforeMount,
+  reactive,
+  ref,
+} from "vue";
 import { createI18n, useI18n } from "vue-i18n";
 
-import { cart, isMobile } from "@/composables/states";
+import { cart } from "@/composables/states";
 import { Product } from "@/interfaces";
 
 const app = getCurrentInstance().appContext.app;
@@ -17,6 +21,7 @@ app.use(
 
 const product = reactive({} as Product);
 const choices = reactive({} as Record<string, string>);
+const quantity = ref(1);
 const { t } = useI18n();
 
 const finalPrice = computed(() => {
@@ -46,7 +51,7 @@ function addToCart() {
     name: product.name,
     image: product.images?.[0],
     unitPrice: finalPrice.value,
-    quantity: 1,
+    quantity: quantity.value,
     choices: Object.assign({}, choices),
   });
 }
@@ -83,9 +88,19 @@ onBeforeMount(() => {
         </label>
       </div>
     </div>
-    <button class="btn-normal primary" @click="addToCart">
-      <span v-text="t('Add to Cart')"></span>
-    </button>
+
+    <div class="option">
+      <div class="option-name" v-text="t('Quantity')"></div>
+      <div>
+        <input v-model="quantity" type="number" min="1" step="1" />
+      </div>
+    </div>
+
+    <div class="buy-buttons">
+      <button class="btn-normal primary" @click="addToCart">
+        <span v-text="t('Add to Cart')"></span>
+      </button>
+    </div>
   </Teleport>
   <Teleport to=".final-price">
     <span v-text="finalPrice"></span>
@@ -95,6 +110,8 @@ onBeforeMount(() => {
 <i18n lang="yaml">
 en:
   Add to Cart: Add to Cart
+  Quantity: Quantity
 zh-CN:
   Add to Cart: 加入购物车
+  Quantity: 数量
 </i18n>

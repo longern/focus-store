@@ -69,11 +69,12 @@ const product = products[0];
   .product-detail .option {
     display: flex;
     align-items: center;
-    margin: 24px 0;
+    margin-top: 24px;
   }
 
   .product-detail .option-name {
     width: 128px;
+    margin-bottom: 4px;
   }
 
   .product-detail .option-value {
@@ -90,6 +91,10 @@ const product = products[0];
 
   .product-detail input[type="radio"]:checked+.option-value {
     border-color: gray;
+  }
+
+  .product-detail .buy-buttons {
+    margin-top: 24px;
   }
 
   @media not all and (max-width: 960px) {
