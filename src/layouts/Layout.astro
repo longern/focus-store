@@ -67,6 +67,6 @@ const styleVars = {
     const lang = navigator.language;
     for (var t of document.querySelectorAll("t"))
       if (translate[lang][t.textContent])
-        t.textContent = translate[lang][t.textContent];
+        t.replaceWith(document.createTextNode(translate[lang][t.textContent]));
   })();
 </script>
