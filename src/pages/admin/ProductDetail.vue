@@ -104,7 +104,7 @@ onBeforeMount(() => {
       </label>
       <label class="form-label">
         <span v-text="t('Category')"></span>
-        <input v-model="product.category" />
+        <input type="text" v-model="product.category" />
       </label>
       <div class="form-label">
         <span v-text="t('Options')"></span>
