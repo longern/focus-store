@@ -222,7 +222,6 @@ async function checkout() {
 }
 
 .checkout textarea {
-  box-sizing: border-box;
   width: 100%;
 }
 </style>

@@ -62,7 +62,6 @@ window.addEventListener("resize", () => {
 }
 
 .admin .container {
-  box-sizing: border-box;
   width: 100%;
   padding: 12px;
 }

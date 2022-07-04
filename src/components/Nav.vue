@@ -118,7 +118,6 @@ aside.category-menu.hide {
 }
 
 aside.category-menu > a {
-  box-sizing: border-box;
   width: 100%;
 }
 

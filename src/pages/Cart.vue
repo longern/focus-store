@@ -147,7 +147,6 @@ function removeFromCart(product) {
 }
 
 .cart-empty {
-  box-sizing: border-box;
   height: 100%;
   display: flex;
   flex-direction: column;

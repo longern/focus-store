@@ -191,7 +191,6 @@ label > span {
 }
 
 textarea {
-  box-sizing: border-box;
   min-height: 200px;
   width: 100%;
   font: 1em sans-serif;

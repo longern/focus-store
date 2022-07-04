@@ -82,7 +82,6 @@ const showContent = ref(false);
 }
 
 .menu-tabs-content.content-padding {
-  box-sizing: border-box;
   padding: 12px;
 }
 
