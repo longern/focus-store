@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { onBeforeMount, reactive, ref } from "vue";
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiPlus } from "@mdi/js";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { mdiPlus } from "@mdi/js";
-import SvgIcon from "@jamescoyle/vue-icon";
 
 import Message from "@/components/Message.vue";
 import { Product } from "@/interfaces";
@@ -13,10 +15,11 @@ const props = defineProps({
   id: String,
 });
 
+const descriptionEditor = ref<InstanceType<typeof QuillEditor>>(null);
 const imageInput = ref<HTMLInputElement>(null);
 const message = ref<InstanceType<typeof Message> | null>(null);
 const originalProductName = ref("\xA0");
-const product = reactive({} as Product);
+const product = reactive({ description: "" } as Product);
 const saving = ref(false);
 
 const { t } = useI18n();
@@ -51,9 +54,15 @@ onBeforeMount(() => {
 
   fetch(`/api/products/${props.id}`)
     .then((res) => res.json())
-    .then((res: Product) => {
+    .then(async (res: Product) => {
       Object.assign(product, res);
       originalProductName.value = res.name;
+
+      // `v-model:content` is actually not two-way binding,
+      // so we need to manually update the editor content.
+      if (!descriptionEditor.value)
+        await new Promise((resolve) => onMounted(() => resolve(null)));
+      descriptionEditor.value.setHTML(product.description);
     });
 });
 </script>
@@ -100,7 +109,14 @@ onBeforeMount(() => {
       </div>
       <label class="form-label">
         <span v-text="t('Description')"></span>
-        <textarea v-model="product.description"></textarea>
+        <div style="display: flex; flex-direction: column">
+          <QuillEditor
+            ref="descriptionEditor"
+            v-model:content="product.description"
+            contentType="html"
+            toolbar="full"
+          ></QuillEditor>
+        </div>
       </label>
       <label class="form-label">
         <span v-text="t('Category')"></span>
@@ -204,6 +220,7 @@ summary {
 
 <i18n lang="yaml">
 en:
+  Add Option: Add Option
   Category: Category
   Description: Description
   Images: Images
@@ -214,6 +231,7 @@ en:
   Save: Save
   Saved: Saved
 zh-CN:
+  Add Option: 添加选项
   Category: 分类
   Description: 描述
   Images: 图片
