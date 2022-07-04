@@ -7,7 +7,7 @@ import MenuTabs from "@/components/MenuTabs.vue";
 import { cart, profile } from "@/composables/states";
 import { Address, Order } from "@/interfaces";
 
-const order = reactive({} as Order);
+const order = reactive({ payment: "manual" } as Order);
 order.address = profile.value.addresses.length
   ? profile.value.addresses[0]
   : ({} as Address);
@@ -133,6 +133,16 @@ async function checkout() {
           </form>
         </div>
       </MenuTab>
+      <MenuTab :title="t('Payment method')">
+        <form>
+          <div>
+            <label>
+              <input type="radio" v-model="order.payment" value="manual" />
+              <span v-text="t('Manual payment')" />
+            </label>
+          </div>
+        </form>
+      </MenuTab>
       <MenuTab :title="t('Other information')">
         <div>
           <label for="note">Note</label>
@@ -221,11 +231,15 @@ async function checkout() {
 en:
   Address: Address
   Checkout: Checkout
+  Manual payment: Manual payment
   Other information: Other information
+  Payment method: Payment method
   "Total: ": "Total: "
 zh-CN:
   Address: 地址
   Checkout: 确认订单
+  Manual payment: 手动支付
   Other information: 其它信息
+  Payment method: 支付方式
   "Total: ": 合计：
 </i18n>

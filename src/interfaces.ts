@@ -116,6 +116,7 @@ export interface Order {
   }>;
   note: string;
   address: Address;
+  payment: string;
   status: string;
   createdAt: string;
 }
