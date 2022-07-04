@@ -129,8 +129,8 @@ aside.category-menu > a {
   }
 }
 
-nav > a {
-  display: inline-flex;
+nav .btn-icon {
+  color: white !important;
 }
 
 .social-media {
