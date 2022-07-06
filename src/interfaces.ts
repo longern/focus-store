@@ -65,6 +65,7 @@ export interface Product {
   category: string;
   description: string;
   options: Array<ProductOption>;
+  updatedAt: string;
 }
 
 export const products = <Array<Product>>[
@@ -117,6 +118,6 @@ export interface Order {
   note: string;
   address: Address;
   payment: string;
-  status: string;
+  status: "pendingPayment" | "paid" | "completed";
   createdAt: string;
 }

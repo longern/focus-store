@@ -8,6 +8,7 @@ import { cart, profile } from "@/composables/states";
 import { Address, Order } from "@/interfaces";
 
 const order = reactive({ payment: "manual" } as Order);
+order.products = cart.value;
 order.address = profile.value.addresses.length
   ? profile.value.addresses[0]
   : ({} as Address);
@@ -33,6 +34,7 @@ async function checkout() {
     body: JSON.stringify(order),
   });
 
+  cart.value.splice(0, cart.value.length);
   const orderId = ((await response.json()) as Order).id;
 
   window.location.href = new URL(
