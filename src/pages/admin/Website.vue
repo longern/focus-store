@@ -6,10 +6,12 @@ import { useI18n } from "vue-i18n";
 
 import MenuTab from "@/components/MenuTab.vue";
 import MenuTabs from "@/components/MenuTabs.vue";
+import Message from "@/components/Message.vue";
 import { Site } from "@/interfaces";
 import { uploadImage } from "@/utils";
 
 const coverImage = ref(null);
+const message = ref<InstanceType<typeof Message>>(null);
 const site = reactive({} as Site);
 const { t } = useI18n();
 
@@ -20,7 +22,7 @@ function saveSite() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(site),
-  });
+  }).then(() => message.value.show());
 }
 
 function uploadLazyImage(imageInput: HTMLInputElement, key: string) {
@@ -185,6 +187,10 @@ function onDeploy() {
       </MenuTabs>
     </form>
   </div>
+
+  <Message ref="message">
+    <span v-text="t('Saved')"></span>
+  </Message>
 </template>
 
 <style scoped>
@@ -239,6 +245,7 @@ en:
   Name: Name
   Quote: Quote
   Save: Save
+  Saved: Saved
   Testimonials: Testimonials
   Title: Title
   Website: Website
@@ -258,6 +265,7 @@ zh-CN:
   Name: 姓名
   Quote: 评论
   Save: 保存
+  Saved: 保存成功
   Testimonials: 客户评价
   Title: 标题
   Website: 网站
