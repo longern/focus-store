@@ -1,5 +1,5 @@
 import { ref, Ref, watch } from "vue";
-import { Address } from "@/interfaces";
+import { Address, Order } from "@/interfaces";
 
 function storeLocal<T>(key: string, variable: Ref<T>) {
   const localStorageItem = localStorage.getItem(key);
@@ -39,6 +39,7 @@ export interface Profile {
   username: string;
   addresses: Array<Address>;
   measurements: Measurements;
+  orders?: Array<Order>;
 }
 
 export const profile = storeLocal("focusProfile", ref({} as Profile));

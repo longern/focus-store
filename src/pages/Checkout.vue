@@ -35,12 +35,9 @@ async function checkout() {
   });
 
   cart.value.splice(0, cart.value.length);
-  const orderId = ((await response.json()) as Order).id;
-
-  window.location.href = new URL(
-    `/pay?order=${orderId}`,
-    window.location.origin
-  ).toString();
+  Object.assign(order, (await response.json()) as Order);
+  (profile.value.orders ||= []).push(order);
+  window.location.href = `/pay?order=${order.id}`;
 }
 </script>
 
