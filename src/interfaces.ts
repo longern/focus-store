@@ -29,6 +29,7 @@ export interface Site {
 
   currencyPrefix: string;
   currencySuffix: string;
+  deployHook: string;
 }
 
 export const site = {} as Site;

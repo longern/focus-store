@@ -61,10 +61,15 @@ onBeforeMount(() => {
       Object.assign(site, res);
     });
 });
+
+function onDeploy() {
+  if (!site.deployHook) return;
+  fetch(site.deployHook, { method: "POST", mode: "no-cors" });
+}
 </script>
 
 <template>
-  <div>
+  <div class="admin-website">
     <h1 v-text="t('Website')"></h1>
     <form @submit.prevent="saveSite">
       <MenuTabs>
@@ -106,11 +111,6 @@ onBeforeMount(() => {
             <span v-text="t('About us')"></span>
             <textarea v-model="site.aboutUs"></textarea>
           </label>
-          <button
-            type="submit"
-            class="btn-normal primary"
-            v-text="t('Save')"
-          ></button>
         </MenuTab>
         <MenuTab :title="t('Testimonials')">
           <div v-for="(testimonial, index) in site.testimonials">
@@ -164,7 +164,24 @@ onBeforeMount(() => {
             <span v-text="t('Currency symbol')"></span>
             <input type="text" v-model="site.currencyPrefix" />
           </label>
+          <label>
+            <span v-text="t('Deploy hook')"></span>
+            <input type="text" v-model="site.deployHook" />
+          </label>
         </MenuTab>
+        <div class="actions">
+          <button
+            type="submit"
+            class="btn-normal primary"
+            v-text="t('Save')"
+          ></button>
+          <button
+            type="button"
+            class="btn-normal danger"
+            v-text="t('Deploy')"
+            @click="onDeploy"
+          ></button>
+        </div>
       </MenuTabs>
     </form>
   </div>
@@ -195,6 +212,14 @@ textarea {
   width: 100%;
   font: 1em sans-serif;
 }
+
+.actions {
+  margin-top: 12px;
+}
+
+.actions > button + button {
+  margin-left: 12px;
+}
 </style>
 
 <i18n lang="yaml">
@@ -206,6 +231,8 @@ en:
   Cover: Cover
   Cover image: Cover image
   Currency symbol: Currency symbol
+  Deploy: Deploy
+  Deploy hook: Deploy hook
   Delete: Delete
   Global settings: Global settings
   Logo: Logo
@@ -224,6 +251,8 @@ zh-CN:
   Cover image: 封面图片
   Currency symbol: 货币符号
   Delete: 删除
+  Deploy: 部署
+  Deploy hook: 部署挂钩
   Global settings: 全局设置
   Logo: Logo
   Name: 姓名
