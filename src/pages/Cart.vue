@@ -52,7 +52,7 @@ function removeFromCart(product) {
                   min="1"
                   step="1"
                   v-model="item.quantity"
-                  style="width: 40px"
+                  style="width: 48px"
                 />
               </div>
             </div>

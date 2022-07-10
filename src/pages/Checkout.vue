@@ -43,6 +43,9 @@ async function checkout() {
 
 <template>
   <div class="container checkout">
+    <div style="font-size: 1.2rem; padding: 8px">
+      <span v-text="t('Checkout')"></span>
+    </div>
     <div class="order-items">
       <div v-for="item in cart" :key="item.id">
         <div class="order-item">
