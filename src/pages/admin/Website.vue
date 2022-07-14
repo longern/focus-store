@@ -161,6 +161,24 @@ function onDeploy() {
             v-text="t('Add testimonial')"
           ></button>
         </MenuTab>
+        <MenuTab :title="t('Payment methods')">
+          <div v-for="method in site.paymentMethods">
+            <label>
+              <span v-text="t('Identifier')"></span>
+              <input type="text" v-model="method.supportedMethods" />
+            </label>
+            <label>
+              <span v-text="t('Data')"></span>
+              <textarea type="text" v-model="method.data" />
+            </label>
+          </div>
+          <button
+            type="button"
+            class="btn-normal primary"
+            @click="(site.paymentMethods ||= []).push({ supportedMethods: '' })"
+            v-text="t('Add payment method')"
+          ></button>
+        </MenuTab>
         <MenuTab :title="t('Global settings')">
           <label>
             <span v-text="t('Currency symbol')"></span>
@@ -231,18 +249,22 @@ textarea {
 <i18n lang="yaml">
 en:
   About us: About us
+  Add payment method: Add payment method
   Add testimonial: Add testimonial
   Avatar: Avatar
   Caption: Caption
   Cover: Cover
   Cover image: Cover image
   Currency symbol: Currency symbol
+  Data: Data
   Deploy: Deploy
   Deploy hook: Deploy hook
   Delete: Delete
   Global settings: Global settings
+  Identifier: Identifier
   Logo: Logo
   Name: Name
+  Payment methods: Payment methods
   Quote: Quote
   Save: Save
   Saved: Saved
@@ -251,18 +273,22 @@ en:
   Website: Website
 zh-CN:
   About us: 关于我们
+  Add payment method: 添加支付方式
   Add testimonial: 添加客户评价
   Avatar: 头像
   Caption: 作者描述
   Cover: 封面
   Cover image: 封面图片
   Currency symbol: 货币符号
+  Data: 数据
   Delete: 删除
   Deploy: 部署
   Deploy hook: 部署挂钩
   Global settings: 全局设置
+  Identifier: 标识
   Logo: Logo
   Name: 姓名
+  Payment methods: 支付方式
   Quote: 评论
   Save: 保存
   Saved: 保存成功

@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { site } from "@/interfaces";
 ---
 
 <Layout title="Payment">
@@ -8,15 +9,10 @@ import Layout from "@/layouts/Layout.astro";
   </main>
 </Layout>
 
-<script is:inline>
+<script define:vars={{ paymentMethods: site.paymentMethods }}>
   function pay() {
     const paymentRequest = new PaymentRequest(
-      [
-        {
-          supportedMethods: "https://pay.longern.com/",
-          data: {},
-        },
-      ],
+      paymentMethods,
       {
         total: {
           label: "Total",

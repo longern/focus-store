@@ -30,6 +30,8 @@ export interface Site {
   currencyPrefix: string;
   currencySuffix: string;
   deployHook: string;
+
+  paymentMethods: Array<{ supportedMethods: string; data?: any }>;
 }
 
 export const site = {} as Site;
