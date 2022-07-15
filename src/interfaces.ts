@@ -114,6 +114,7 @@ export interface Order {
   products: Array<{
     id: string;
     name: string;
+    image: string;
     choices: Record<string, string>;
     unitPrice: number;
     quantity: number;
