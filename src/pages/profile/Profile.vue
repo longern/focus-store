@@ -20,6 +20,15 @@ onBeforeMount(async () => {
 <template>
   <div class="container">
     <MenuTabs>
+      <MenuTab :title="t('Orders')">
+        <a
+          v-for="order in profile.orders"
+          :key="order.id"
+          :href="`/orders?id=${order.id}`"
+        >
+          <div v-text="order.id"></div>
+        </a>
+      </MenuTab>
       <MenuTab :title="t('Measurements')">
         <form>
           <label for="height">Height</label>
@@ -105,10 +114,12 @@ onBeforeMount(async () => {
 <i18n lang="yaml">
 en:
   Measurements: Measurements
+  Orders: Orders
   Payment: Payment
   Shipping Address: Shipping address
 zh-CN:
   Measurements: 尺寸信息
+  Orders: 订单
   Payment: 支付
   Shipping address: 收货地址
 </i18n>
