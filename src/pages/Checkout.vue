@@ -37,7 +37,7 @@ async function checkout() {
   cart.value.splice(0, cart.value.length);
   Object.assign(order, (await response.json()) as Order);
   (profile.value.orders ||= []).push(order);
-  window.location.href = `/pay?order=${order.id}`;
+  window.location.href = `/orders?id=${order.id}`;
 }
 </script>
 

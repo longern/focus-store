@@ -4,6 +4,7 @@ import md5 from "md5";
 import { onBeforeMount, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
+import JsonArea from "@/components/JsonArea.vue";
 import MenuTab from "@/components/MenuTab.vue";
 import MenuTabs from "@/components/MenuTabs.vue";
 import Message from "@/components/Message.vue";
@@ -169,7 +170,7 @@ function onDeploy() {
             </label>
             <label>
               <span v-text="t('Data')"></span>
-              <textarea type="text" v-model="method.data" />
+              <JsonArea v-model="method.data" />
             </label>
           </div>
           <button
