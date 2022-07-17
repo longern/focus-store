@@ -30,7 +30,7 @@ onMounted(() => (mounted.value = true));
         <OrderItem :item="item"></OrderItem>
       </div>
       <div v-text="order.id"></div>
-      <div v-text="order.createdAt"></div>
+      <div v-text="new Date(order.createdAt).toLocaleString()"></div>
     </div>
   </div>
 </template>

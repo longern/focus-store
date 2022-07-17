@@ -31,7 +31,7 @@ onBeforeMount(() => {
           <span v-text="order.id"></span>
         </div>
         <div class="order-date">
-          <span v-text="order.createdAt"></span>
+          <span v-text="new Date(order.createdAt).toLocaleString()"></span>
         </div>
         <div class="order-status">
           <span v-text="order.status"></span>
