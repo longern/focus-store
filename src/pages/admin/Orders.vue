@@ -3,6 +3,7 @@ import { onBeforeMount, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { Order } from "@/interfaces";
+import OrderItem from "@/components/OrderItem.vue";
 
 const orders = reactive(<Array<Order>>[]);
 const { t } = useI18n();
@@ -25,10 +26,13 @@ onBeforeMount(() => {
 <template>
   <h1 v-text="t('Orders')"></h1>
   <div class="order-list">
-    <div class="order-item" v-for="order in orders">
+    <div class="order-list-item" v-for="order in orders">
       <div class="order-info">
         <div class="order-id">
           <span v-text="order.id"></span>
+        </div>
+        <div class="product-list">
+          <OrderItem v-for="item in order.products" :item="item"></OrderItem>
         </div>
         <div class="order-date">
           <span v-text="new Date(order.createdAt).toLocaleString()"></span>
@@ -50,3 +54,17 @@ en:
 zh-CN:
   Orders: 订单
 </i18n>
+
+<style>
+.order-list .order-list-item {
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.order-list .order-id {
+  font-size: 0.8rem;
+  color: #666;
+}
+</style>
