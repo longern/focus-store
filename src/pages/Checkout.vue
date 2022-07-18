@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { i18n } from "@/plugins/i18n";
-import { computed, getCurrentInstance, reactive, ref } from "vue";
+import { getCurrentInstance, reactive, ref } from "vue";
 
 import MenuTab from "@/components/MenuTab.vue";
 import MenuTabs from "@/components/MenuTabs.vue";
@@ -12,16 +12,16 @@ order.products = cart.value;
 order.address = profile.value.addresses.length
   ? profile.value.addresses[0]
   : ({} as Address);
-const setAddressAsDefault = ref(profile.value.addresses.length === 0);
-const { t } = i18n(getCurrentInstance());
-
-const totalPrice = computed(() => {
+order.totalPrice = (() => {
   let total = 0;
   for (const item of cart.value) {
     total += item.unitPrice * item.quantity;
   }
   return total;
-});
+})();
+
+const setAddressAsDefault = ref(profile.value.addresses.length === 0);
+const { t } = i18n(getCurrentInstance());
 
 async function checkout() {
   if (setAddressAsDefault.value) {
@@ -126,6 +126,13 @@ async function checkout() {
               v-model="order.address.postal"
               autocomplete="postal-code"
             /><br />
+            <label for="tel">Tel</label>
+            <input
+              type="text"
+              id="tel"
+              v-model="order.address.tel"
+              autocomplete="tel"
+            /><br />
             <label for="setAddressAsDefault">Set as default</label>
             <input
               type="checkbox"
@@ -156,7 +163,7 @@ async function checkout() {
       <span style="margin-right: 8px">
         <span v-text="t('Total: ')"></span>
         <span class="currency-prefix"></span>
-        <span v-text="totalPrice"></span>
+        <span v-text="order.totalPrice"></span>
       </span>
       <button class="btn-normal primary" @click="checkout">
         <span v-text="t('Checkout')"></span>

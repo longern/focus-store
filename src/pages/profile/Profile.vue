@@ -101,6 +101,13 @@ onBeforeMount(async () => {
             v-model="profile.addresses[0].postal"
             autocomplete="postal-code"
           /><br />
+          <label for="tel">Tel</label>
+          <input
+            type="text"
+            id="tel"
+            v-model="profile.addresses[0].tel"
+            autocomplete="tel"
+          /><br />
         </form>
       </MenuTab>
       <!--

@@ -6,6 +6,7 @@ export interface Address {
   state: string;
   country: string;
   postal: string;
+  tel: string;
 }
 
 export interface Site {
@@ -119,6 +120,7 @@ export interface Order {
     unitPrice: number;
     quantity: number;
   }>;
+  totalPrice: number;
   note: string;
   address: Address;
   payment: string;
