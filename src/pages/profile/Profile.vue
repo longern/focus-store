@@ -106,7 +106,7 @@ onBeforeMount(async () => {
             type="text"
             id="tel"
             v-model="profile.addresses[0].tel"
-            autocomplete="tel"
+            autocomplete="tel-national"
           /><br />
         </form>
       </MenuTab>

@@ -56,23 +56,50 @@ onMounted(() => (mounted.value = true));
             v-text="t('Completed')"
           ></span>
         </div>
-        <div v-text="order.id"></div>
-        <div v-text="order.address.fullName"></div>
-        <div v-text="order.address.tel"></div>
-        <div>
-          <span v-text="order.address.street"></span>
-          <span v-text="order.address.district"></span>
-          <span v-text="order.address.city"></span>
-          <span v-text="order.address.state"></span>
-          <span v-text="order.address.country"></span>
+        <div class="order-detail-field">
+          <span class="order-detail-key" v-text="t('Order ID')"></span>
+          <span v-text="order.id"></span>
         </div>
-        <div v-text="new Date(order.createdAt).toLocaleString()"></div>
+        <div class="order-detail-field">
+          <span class="order-detail-key" v-text="t('Full Name')"></span>
+          <span v-text="order.address.fullName"></span>
+        </div>
+        <div class="order-detail-field">
+          <span class="order-detail-key" v-text="t('Tel')"></span>
+          <span v-text="order.address.tel"></span>
+        </div>
+        <div class="order-detail-field">
+          <span class="order-detail-key" v-text="t('Shipping Address')"></span>
+          <div>
+            <span v-text="order.address.street"></span>
+            <span v-text="order.address.district"></span>
+            <span v-text="order.address.city"></span>
+            <span v-text="order.address.state"></span>
+            <span v-text="order.address.country"></span>
+          </div>
+        </div>
+        <div class="order-detail-field">
+          <span class="order-detail-key" v-text="t('Created at')"></span>
+          <span v-text="new Date(order.createdAt).toLocaleString()"></span>
+        </div>
       </div>
       <div class="product-list">
         <template v-for="item in order.products" :key="item.id">
           <OrderItem :item="item"></OrderItem>
         </template>
       </div>
+    </div>
+    <div class="order-actions">
+      <button
+        class="btn-normal primary"
+        v-if="order.status === 'pendingPayment'"
+        v-text="t('Pay')"
+      ></button>
+      <button
+        class="btn-normal primary"
+        v-if="order.status === 'shipping'"
+        v-text="t('Confirm receipt')"
+      ></button>
     </div>
   </div>
 </template>
@@ -88,10 +115,36 @@ onMounted(() => (mounted.value = true));
 .order-detail {
   display: flex;
   padding: 8px;
+  column-gap: 24px;
 }
 
 .order-detail > .product-list {
   flex-grow: 1;
+  flex-shrink: 0;
+  max-width: 100%;
+  width: 768px;
+}
+
+.order-detail-status {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 8px;
+}
+
+.order-detail-field {
+  display: flex;
+  padding: 0.3rem 0;
+}
+
+.order-detail-key {
+  flex-shrink: 0;
+  width: 128px;
+}
+
+.order-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 8px;
 }
 
 @media (max-width: 960px) {
@@ -103,15 +156,29 @@ onMounted(() => (mounted.value = true));
 
 <i18n lang="yaml">
 en:
-  Pending Payment: "Pending Payment"
-  Paid: "Paid"
   Cancelled: "Cancelled"
-  Shipping: "Shipping"
   Completed: "Completed"
+  Confirm receipt: "Confirm receipt"
+  Created at: "Created at"
+  Full Name: "Full Name"
+  Order ID: "Order ID"
+  Paid: "Paid"
+  Pay: "Pay"
+  Pending Payment: "Pending Payment"
+  Shipping: "Shipping"
+  Shipping Address: "Shipping Address"
+  Tel: "Tel"
 zh-CN:
-  Pending Payment: "待付款"
-  Paid: "已付款"
   Cancelled: "已取消"
-  Shipping: "配送中"
   Completed: "已完成"
+  Confirm receipt: "确认收货"
+  Created at: "创建时间"
+  Full Name: "姓名"
+  Order ID: "订单编号"
+  Paid: "已付款"
+  Pay: "付款"
+  Pending Payment: "待付款"
+  Shipping: "配送中"
+  Shipping Address: "配送地址"
+  Tel: "电话"
 </i18n>

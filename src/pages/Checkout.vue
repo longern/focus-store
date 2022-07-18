@@ -131,7 +131,7 @@ async function checkout() {
               type="text"
               id="tel"
               v-model="order.address.tel"
-              autocomplete="tel"
+              autocomplete="tel-national"
             /><br />
             <label for="setAddressAsDefault">Set as default</label>
             <input
