@@ -2,9 +2,9 @@
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiClose } from "@mdi/js";
 import { computed, getCurrentInstance } from "vue";
-import { i18n } from "@/plugins/i18n";
 
 import { cart, isMobile } from "@/composables/states";
+import { i18n } from "@/plugins/i18n";
 
 const { t } = i18n(getCurrentInstance());
 

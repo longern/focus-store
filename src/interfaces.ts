@@ -124,6 +124,6 @@ export interface Order {
   note: string;
   address: Address;
   payment: string;
-  status: "pendingPayment" | "paid" | "completed";
+  status: "pendingPayment" | "cancelled" | "paid" | "shipping" | "completed";
   createdAt: string;
 }
