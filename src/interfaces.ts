@@ -33,6 +33,7 @@ export interface Site {
   deployHook: string;
 
   paymentMethods: Array<{ supportedMethods: string; data?: any }>;
+  paymentInstructions: string;
 }
 
 export const site = {} as Site;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // @ts-ignore
 import md5 from "md5";
-import { onBeforeMount, reactive, ref } from "vue";
+import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import JsonArea from "@/components/JsonArea.vue";
@@ -10,9 +10,12 @@ import MenuTabs from "@/components/MenuTabs.vue";
 import Message from "@/components/Message.vue";
 import { Site } from "@/interfaces";
 import { uploadImage } from "@/utils";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 const coverImage = ref(null);
 const message = ref<InstanceType<typeof Message>>(null);
+const paymentInstructions = ref<InstanceType<typeof QuillEditor>>(null);
 const site = reactive({} as Site);
 const { t } = useI18n();
 
@@ -57,12 +60,13 @@ function uploadLazyImage(imageInput: HTMLInputElement, key: string) {
   imageInput.files = null;
 }
 
-onBeforeMount(() => {
-  fetch("/api/site")
-    .then((res) => res.json())
-    .then((res) => {
-      Object.assign(site, res);
-    });
+onBeforeMount(async () => {
+  const response = await fetch("/api/site");
+  Object.assign(site, await response.json());
+
+  if (!paymentInstructions.value)
+    await new Promise((resolve) => onMounted(() => resolve(null)));
+  paymentInstructions.value.setHTML(site.paymentInstructions || "");
 });
 
 function onDeploy() {
@@ -179,6 +183,17 @@ function onDeploy() {
             @click="(site.paymentMethods ||= []).push({ supportedMethods: '' })"
             v-text="t('Add payment method')"
           ></button>
+          <label>
+            <span v-text="t('Payment instructions')"></span>
+            <div @click.prevent style="display: flex; flex-direction: column">
+              <QuillEditor
+                ref="paymentInstructions"
+                v-model:content="site.paymentInstructions"
+                contentType="html"
+                toolbar="full"
+              ></QuillEditor>
+            </div>
+          </label>
         </MenuTab>
         <MenuTab :title="t('Global settings')">
           <label>
@@ -265,6 +280,7 @@ en:
   Identifier: Identifier
   Logo: Logo
   Name: Name
+  Payment instructions: Payment instructions
   Payment methods: Payment methods
   Quote: Quote
   Save: Save
@@ -289,6 +305,7 @@ zh-CN:
   Identifier: 标识
   Logo: Logo
   Name: 姓名
+  Payment instructions: 支付指南
   Payment methods: 支付方式
   Quote: 评论
   Save: 保存

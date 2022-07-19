@@ -109,7 +109,7 @@ onBeforeMount(() => {
       </div>
       <label class="form-label">
         <span v-text="t('Description')"></span>
-        <div style="display: flex; flex-direction: column">
+        <div @click.prevent style="display: flex; flex-direction: column">
           <QuillEditor
             ref="descriptionEditor"
             v-model:content="product.description"
