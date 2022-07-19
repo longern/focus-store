@@ -15,6 +15,34 @@ const mounted = ref(false);
 const order = reactive({} as Order);
 const { t } = i18n(getCurrentInstance());
 
+async function pay() {
+  const paymentRequest = new PaymentRequest(
+    [
+      {
+        supportedMethods: "https://manual-payment.pages.dev/",
+        data: { redirect_url: window.location.origin + "/pay/manual" },
+      },
+    ],
+    {
+      total: {
+        label: t("Total"),
+        amount: {
+          currency: "USD",
+          value: order.totalPrice.toFixed(2),
+        },
+      },
+    }
+  );
+
+  try {
+    if (!(await paymentRequest.canMakePayment()))
+      window.location.href = "/pay/fallback";
+    await paymentRequest.show();
+  } catch (e) {
+    document.title = e.toString();
+  }
+}
+
 onBeforeMount(() => {
   const url = new URL(window.location.href);
   const orderId = url.searchParams.get("id");
@@ -94,6 +122,7 @@ onMounted(() => (mounted.value = true));
         class="btn-normal primary"
         v-if="order.status === 'pendingPayment'"
         v-text="t('Pay')"
+        @click="pay"
       ></button>
       <button
         class="btn-normal primary"
@@ -168,6 +197,7 @@ en:
   Shipping: "Shipping"
   Shipping Address: "Shipping Address"
   Tel: "Tel"
+  Total: "Total"
 zh-CN:
   Cancelled: "已取消"
   Completed: "已完成"
@@ -181,4 +211,5 @@ zh-CN:
   Shipping: "配送中"
   Shipping Address: "配送地址"
   Tel: "电话"
+  Total: "总计"
 </i18n>
