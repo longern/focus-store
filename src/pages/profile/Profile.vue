@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { getCurrentInstance, onBeforeMount } from "vue";
 import { i18n } from "@/plugins/i18n";
+import { getCurrentInstance, onBeforeMount } from "vue";
 
 import MenuTab from "@/components/MenuTab.vue";
 import MenuTabs from "@/components/MenuTabs.vue";
+import OrderItem from "@/components/OrderItem.vue";
 import { profile } from "@/composables/states";
 
 const { t } = i18n(getCurrentInstance());
@@ -18,7 +19,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="profile container">
     <MenuTabs>
       <MenuTab :title="t('Orders')">
         <a
@@ -27,6 +28,11 @@ onBeforeMount(async () => {
           :href="`/orders?id=${order.id}`"
         >
           <div v-text="order.id"></div>
+          <div class="product-list">
+            <template v-for="item in order.products" :key="item.id">
+              <OrderItem :item="item"></OrderItem>
+            </template>
+          </div>
         </a>
       </MenuTab>
       <MenuTab :title="t('Measurements')">
@@ -117,6 +123,13 @@ onBeforeMount(async () => {
     </MenuTabs>
   </div>
 </template>
+
+<style>
+.profile label {
+  display: inline-block;
+  width: 128px;
+}
+</style>
 
 <i18n lang="yaml">
 en:
