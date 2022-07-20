@@ -87,7 +87,7 @@ function onDeploy() {
           </label>
           <label>
             <span v-text="t('Logo')"></span>
-            <div>
+            <div style="flex-grow: 1" @click.self.prevent>
               <img :src="site.logo" height="64" width="64" />
               <input
                 type="file"
@@ -99,7 +99,7 @@ function onDeploy() {
           </label>
           <label>
             <span v-text="t('Cover image')"></span>
-            <div>
+            <div style="flex-grow: 1" @click.self.prevent>
               <img
                 :src="site.coverImage?.src || site.coverImage?.lazySrc"
                 height="108"
@@ -123,7 +123,7 @@ function onDeploy() {
           <div v-for="(testimonial, index) in site.testimonials">
             <label>
               <span v-text="t('Avatar')"></span>
-              <div>
+              <div style="flex-grow: 1" @click.self.prevent>
                 <img :src="testimonial.avatar" height="64" width="64" />
                 <input
                   type="file"
