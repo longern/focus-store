@@ -79,6 +79,19 @@ function onDeploy() {
   <div class="admin-website">
     <h1 v-text="t('Website')"></h1>
     <form @submit.prevent="saveSite">
+      <div class="actions">
+        <button
+          type="submit"
+          class="btn-normal primary"
+          v-text="t('Save')"
+        ></button>
+        <button
+          type="button"
+          class="btn-normal danger"
+          v-text="t('Deploy')"
+          @click="onDeploy"
+        ></button>
+      </div>
       <MenuTabs>
         <MenuTab :title="t('Cover')">
           <label>
@@ -120,7 +133,10 @@ function onDeploy() {
           </label>
         </MenuTab>
         <MenuTab :title="t('Testimonials')">
-          <div v-for="(testimonial, index) in site.testimonials">
+          <div
+            v-for="(testimonial, index) in site.testimonials"
+            class="testimonial"
+          >
             <label>
               <span v-text="t('Avatar')"></span>
               <div style="flex-grow: 1" @click.self.prevent>
@@ -152,19 +168,21 @@ function onDeploy() {
               v-text="t('Delete')"
             ></button>
           </div>
-          <button
-            type="button"
-            class="btn-normal primary"
-            @click="
-              (site.testimonials ||= []).push({
-                avatar: null,
-                name: null,
-                caption: null,
-                quote: null,
-              })
-            "
-            v-text="t('Add testimonial')"
-          ></button>
+          <div style="margin-top: 12px">
+            <button
+              type="button"
+              class="btn-normal primary"
+              @click="
+                (site.testimonials ||= []).push({
+                  avatar: null,
+                  name: null,
+                  caption: null,
+                  quote: null,
+                })
+              "
+              v-text="t('Add testimonial')"
+            ></button>
+          </div>
         </MenuTab>
         <MenuTab :title="t('Payment methods')">
           <div v-for="method in site.paymentMethods">
@@ -205,19 +223,6 @@ function onDeploy() {
             <input type="text" v-model="site.deployHook" />
           </label>
         </MenuTab>
-        <div class="actions">
-          <button
-            type="submit"
-            class="btn-normal primary"
-            v-text="t('Save')"
-          ></button>
-          <button
-            type="button"
-            class="btn-normal danger"
-            v-text="t('Deploy')"
-            @click="onDeploy"
-          ></button>
-        </div>
       </MenuTabs>
     </form>
   </div>
@@ -245,6 +250,14 @@ label > span {
   label {
     flex-direction: column;
   }
+}
+
+.testimonial {
+  border-radius: 4px;
+  background-color: white;
+  padding: 16px;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+    0 1px 5px 0 rgb(0 0 0 / 12%);
 }
 
 textarea {
