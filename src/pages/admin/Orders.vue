@@ -8,10 +8,18 @@ import OrderItem from "@/components/OrderItem.vue";
 const orders = reactive(<Array<Order>>[]);
 const { t } = useI18n();
 
-function totalPrice(order) {
+function totalPrice(order: Order) {
   return order.products.reduce((total, product) => {
     return total + product.unitPrice * product.quantity;
   }, 0);
+}
+
+function updateOrder(order: Order) {
+  fetch(`/admin/api/orders/${order.id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(order),
+  });
 }
 
 onBeforeMount(() => {
@@ -38,7 +46,13 @@ onBeforeMount(() => {
           <span v-text="new Date(order.createdAt).toLocaleString()"></span>
         </div>
         <div class="order-status">
-          <span v-text="order.status"></span>
+          <select v-model="order.status" @change="updateOrder(order)">
+            <option value="pendingPayment">Pending Payment</option>
+            <option value="paid">Paid</option>
+            <option value="shipping">Shipping</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
         </div>
       </div>
       <div class="order-total">
