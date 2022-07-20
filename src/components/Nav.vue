@@ -27,13 +27,14 @@ onMounted(() => {
     <div style="display: flex; flex-grow: 1; flex-basis: 0">
       <button
         v-if="isMobile"
+        aria-label="Toggle Sidebar"
         class="btn-icon toggle-siderbar"
         @click="showSidebar = !showSidebar"
       >
         <SvgIcon type="mdi" :path="mdiFormatListBulleted" />
       </button>
-      <a href="/" style="display: inline-flex">
-        <img class="logo" :src="props.logo" width="72" height="72" />
+      <a href="/" style="display: inline-flex" aria-label="Home">
+        <img class="logo" :src="props.logo" alt="logo" width="72" height="72" />
       </a>
     </div>
 
@@ -60,14 +61,14 @@ onMounted(() => {
         <div style="flex-grow: 1"></div>
         <div id="navExtra"></div>
         <a href="/cart">
-          <button class="btn-icon">
+          <button class="btn-icon" aria-label="Cart">
             <span :key="mounted && cart.length" :badge="cart.length || null">
               <SvgIcon type="mdi" :path="mdiCart"></SvgIcon>
             </span>
           </button>
         </a>
         <a href="/profile">
-          <button class="btn-icon">
+          <button class="btn-icon" aria-label="Profile">
             <SvgIcon type="mdi" :path="mdiAccount"></SvgIcon>
           </button>
         </a>
