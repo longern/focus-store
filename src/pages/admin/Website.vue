@@ -201,9 +201,9 @@ function onDeploy() {
             @click="(site.paymentMethods ||= []).push({ supportedMethods: '' })"
             v-text="t('Add payment method')"
           ></button>
-          <label>
+          <label for="null">
             <span v-text="t('Payment instructions')"></span>
-            <div @click.prevent style="display: flex; flex-direction: column">
+            <div style="display: flex; flex-direction: column">
               <QuillEditor
                 ref="paymentInstructions"
                 v-model:content="site.paymentInstructions"

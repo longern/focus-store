@@ -107,9 +107,9 @@ onBeforeMount(() => {
           </label>
         </div>
       </div>
-      <label class="form-label">
+      <div class="form-label">
         <span v-text="t('Description')"></span>
-        <div @click.prevent style="display: flex; flex-direction: column">
+        <div style="display: flex; flex-direction: column">
           <QuillEditor
             ref="descriptionEditor"
             v-model:content="product.description"
@@ -117,7 +117,7 @@ onBeforeMount(() => {
             toolbar="full"
           ></QuillEditor>
         </div>
-      </label>
+      </div>
       <label class="form-label">
         <span v-text="t('Category')"></span>
         <input type="text" v-model="product.category" />
