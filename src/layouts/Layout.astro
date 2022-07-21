@@ -50,23 +50,20 @@ const styleVars = {
 </style>
 
 <script is:inline>
-  (() => {
-    var translate = {};
-    for (var elem of document.querySelectorAll("i18n")) {
-      try {
-        const content = JSON.parse(elem.textContent);
-        Object.entries(content).forEach(([key, value]) => {
-          Object.assign(translate[key] ||= {}, value);
-        });
-      } catch (e) {
-        console.error(e);
-        continue;
-      }
-    }
+(() => {
+  var translate = {};
+  Array.from(document.querySelectorAll("i18n")).map((elem) => {
+    try {
+      const content = JSON.parse(elem.textContent);
+      Object.entries(content).forEach(([key, value]) => {
+        Object.assign(translate[key] ||= {}, value);
+      });
+    } catch (e) { console.error(e); }
+  });
 
-    const lang = navigator.language;
-    for (var t of document.querySelectorAll("t"))
-      if (translate[lang][t.textContent])
-        t.replaceWith(document.createTextNode(translate[lang][t.textContent]));
-  })();
+  const lang = navigator.language;
+  for (var t of document.querySelectorAll("t"))
+    if (translate[lang][t.textContent])
+      t.replaceWith(document.createTextNode(translate[lang][t.textContent]));
+})();
 </script>
