@@ -115,6 +115,13 @@ onMounted(() => (mounted.value = true));
         <template v-for="item in order.products" :key="item.id">
           <OrderItem :item="item"></OrderItem>
         </template>
+        <div style="text-align: right">
+          <div class="total-price">
+            <span v-text="t('Total') + ': '"></span>
+            <span class="currency-prefix"></span>
+            <span v-text="order.totalPrice"></span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="order-actions">
