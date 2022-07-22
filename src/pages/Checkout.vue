@@ -77,68 +77,86 @@ async function checkout() {
       <MenuTab :title="t('Address')">
         <div>
           <form>
-            <label for="name">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="name"
-              v-model="order.address.fullName"
-            /><br />
-            <label for="street">Street</label>
-            <input
-              type="text"
-              id="street"
-              v-model="order.address.street"
-              autocomplete="street-address"
-            /><br />
-            <label for="district">District</label>
-            <input
-              type="text"
-              id="district"
-              v-model="order.address.district"
-              autocomplete="address-level3"
-            /><br />
-            <label for="city">City</label>
-            <input
-              type="text"
-              id="city"
-              v-model="order.address.city"
-              autocomplete="address-level2"
-            /><br />
-            <label for="state">State</label>
-            <input
-              type="text"
-              id="state"
-              v-model="order.address.state"
-              autocomplete="address-level1"
-            /><br />
-            <label for="country">Country/Region</label>
-            <input
-              type="text"
-              id="country"
-              v-model="order.address.country"
-              autocomplete="country-name"
-            /><br />
-            <label for="postal">Postal</label>
-            <input
-              type="text"
-              id="postal"
-              v-model="order.address.postal"
-              autocomplete="postal-code"
-            /><br />
-            <label for="tel">Tel</label>
-            <input
-              type="text"
-              id="tel"
-              v-model="order.address.tel"
-              autocomplete="tel-national"
-            /><br />
-            <label for="setAddressAsDefault">Set as default</label>
-            <input
-              type="checkbox"
-              id="setAddressAsDefault"
-              v-model="setAddressAsDefault"
-            /><br />
+            <p>
+              <label :for="`name-${$.uid}`">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                :id="`name-${$.uid}`"
+                v-model="order.address.fullName"
+              />
+            </p>
+            <p>
+              <label :for="`street-${$.uid}`">Street</label>
+              <input
+                type="text"
+                :id="`street-${$.uid}`"
+                v-model="order.address.street"
+                autocomplete="street-address"
+              />
+            </p>
+            <p>
+              <label for="district">District</label>
+              <input
+                type="text"
+                id="district"
+                v-model="order.address.district"
+                autocomplete="address-level3"
+              />
+            </p>
+            <p>
+              <label for="city">City</label>
+              <input
+                type="text"
+                id="city"
+                v-model="order.address.city"
+                autocomplete="address-level2"
+              />
+            </p>
+            <p>
+              <label for="state">State</label>
+              <input
+                type="text"
+                id="state"
+                v-model="order.address.state"
+                autocomplete="address-level1"
+              />
+            </p>
+            <p>
+              <label for="country">Country/Region</label>
+              <input
+                type="text"
+                id="country"
+                v-model="order.address.country"
+                autocomplete="country-name"
+              />
+            </p>
+            <p>
+              <label for="postal">Postal</label>
+              <input
+                type="text"
+                id="postal"
+                v-model="order.address.postal"
+                autocomplete="postal-code"
+              />
+            </p>
+            <p>
+              <label for="tel">Tel</label>
+              <input
+                type="text"
+                id="tel"
+                v-model="order.address.tel"
+                autocomplete="tel-national"
+              />
+            </p>
+            <p>
+              <label for="setAddressAsDefault">Set as default</label>
+              <input
+                type="checkbox"
+                id="setAddressAsDefault"
+                v-model="setAddressAsDefault"
+              />
+            </p>
           </form>
         </div>
       </MenuTab>

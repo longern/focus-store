@@ -55,7 +55,7 @@ onBeforeMount(() => {
 </template>
 
 <style>
-form > * {
+.admin form > * {
   margin-bottom: 12px;
 }
 
