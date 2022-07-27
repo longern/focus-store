@@ -1,9 +1,158 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import LazyBackground from '@/components/LazyBackground.vue';
+import Products from "@/components/Products.astro";
+import { site } from "@/interfaces";
+import Footer from "@/layouts/Footer.astro";
+import Layout from "@/layouts/NavBar.astro";
+
+const i18n = {
+  "en": {
+    "About Us": "About Us",
+    "Featured": "Featured",
+    "Shop Now": "Shop Now",
+    "Testimonials": "Testimonials",
+  },
+  "zh-CN": {
+    "About Us": "关于我们",
+    "Featured": "推荐商品",
+    "Shop Now": "立即购买",
+    "Testimonials": "客户评价",
+  },
+};
 ---
 
-<Layout title="Focus Store">
-	<main>
-		<div class="products"></div>
-	</main>
+<Layout preloads={[{href: site.coverImage?.src, as: "image" }]}>
+  <main class="home">
+    <div class="cover-image">
+      <LazyBackground client:load src={site.coverImage?.src} lazySrc={site.coverImage?.lazySrc} />
+      <div style="text-align: center">
+        <div class="site-title">
+          <span>{site.title}</span>
+        </div>
+        <a href="/products">
+          <button class="btn-normal shop-now">
+            <span>
+              <t>Shop Now</t>
+            </span>
+          </button>
+        </a>
+      </div>
+    </div>
+    { site.featured?.length ?
+    <div class="featured">
+      <h1>
+        <t>Featured</t>
+      </h1>
+      <Products products={site.featured} />
+    </div>
+    : null }
+    { site.aboutUs ?
+    <div class="about-us">
+      <h1>
+        <t>About Us</t>
+      </h1>
+      { site.aboutUs.split("\n").map(line => (<p>{line}</p>)) }
+    </div>
+    : null }
+    { site.testimonials ?
+    <div class="testimonials">
+      <h1>
+        <t>Testimonials</t>
+      </h1>
+      <div class="testimonials-list">
+        { site.testimonials.map(testimonial => (
+        <div class="testimonial">
+          <div class="testimonial-avatar">
+            <img src={ testimonial.avatar } width="100" height="100" />
+            <div class="testimonial-name">{ testimonial.name }</div>
+            <div class="testimonial-caption">{ testimonial.caption }</div>
+          </div>
+          <div class="testimonial-text">
+            <div class="testimonial-quote">{ testimonial.quote }</div>
+          </div>
+          <div style="clear: both;"></div>
+        </div>
+        )) }
+      </div>
+    </div>
+    : null }
+    <Footer></Footer>
+  </main>
+
+  <i18n set:text={JSON.stringify(i18n)} />
 </Layout>
+
+<style is:inline>
+  main {
+    height: 100%;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+  }
+
+  .cover-image {
+    position: relative;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cover-image .lazy-background {
+    filter: brightness(0.8);
+  }
+
+  .site-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    margin: 1em 0;
+  }
+
+  .shop-now {
+    display: inline-block;
+    background-color: #444;
+    color: white;
+    font-size: 20px;
+    padding: 12px 24px;
+    border-radius: 4px;
+  }
+
+  main h1 {
+    text-align: center;
+  }
+
+  .about-us,
+  .testimonials {
+    max-width: 800px;
+    margin: auto;
+    padding: 8px;
+    line-height: 1.6em;
+  }
+
+  .testimonial-avatar {
+    float: left;
+    margin: 12px;
+    text-align: center;
+  }
+
+  .testimonial-avatar>img {
+    border-radius: 50%;
+  }
+
+  @media (max-width: 960px) {
+    main>* {
+      height: 100%;
+      scroll-snap-align: center;
+      overflow-y: auto;
+    }
+  }
+
+  @media not all and (max-width: 960px) {
+    main>* {
+      margin-bottom: 48px;
+    }
+  }
+</style>

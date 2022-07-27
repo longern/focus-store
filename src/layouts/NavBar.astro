@@ -1,0 +1,24 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/Nav.vue';
+import { rootCategory, site } from '@/interfaces';
+
+export interface Props {
+  title?: string;
+  preloads?: Array<{ href: string, as: string }>;
+}
+const { title, preloads = [] } = Astro.props as Props;
+---
+
+<Layout title={title ? `${title} - ${site.title}` : site.title} preloads={preloads}>
+  <Nav client:load logo={site.logo} rootCategory={rootCategory} />
+  <slot />
+</Layout>
+
+<style is:global>
+  @media (max-width: 960px) {
+    nav {
+      order: 1;
+    }
+  }
+</style>

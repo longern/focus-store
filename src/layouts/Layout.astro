@@ -1,8 +1,17 @@
 ---
+import { site } from "@/interfaces";
+import "./global.css"
+
 export interface Props {
   title: string;
+  preloads?: Array<{ href: string, as: string }>;
 }
-const { title } = Astro.props as Props;
+const { title, preloads = [] } = Astro.props as Props;
+
+const styleVars = {
+  currencyPrefix: `"${site.currencyPrefix}"`,
+  currencySuffix: `"${site.currencySuffix}"`,
+};
 ---
 
 <!DOCTYPE html>
@@ -12,6 +21,9 @@ const { title } = Astro.props as Props;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  {preloads.map(({ href, as }) => (
+  <link rel="preload" href={href} as={as} />
+  ))}
   <title>{title}</title>
 </head>
 
@@ -20,3 +32,38 @@ const { title } = Astro.props as Props;
 </body>
 
 </html>
+
+<style is:global define:vars={styleVars}>
+  .currency-prefix::before {
+    content: var(--currencyPrefix);
+  }
+
+  .currency-suffix::before {
+    content: var(--currencySuffix);
+  }
+</style>
+
+<style is:inline>
+  i18n {
+    display: none;
+  }
+</style>
+
+<script is:inline>
+(() => {
+  var translate = {};
+  Array.from(document.querySelectorAll("i18n")).map((elem) => {
+    try {
+      const content = JSON.parse(elem.textContent);
+      Object.entries(content).forEach(([key, value]) => {
+        Object.assign(translate[key] ||= {}, value);
+      });
+    } catch (e) { console.error(e); }
+  });
+
+  const lang = navigator.language;
+  for (var t of document.querySelectorAll("t"))
+    if (translate[lang][t.textContent])
+      t.replaceWith(document.createTextNode(translate[lang][t.textContent]));
+})();
+</script>

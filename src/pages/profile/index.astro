@@ -1,0 +1,10 @@
+---
+import NavBar from '@/layouts/NavBar.astro';
+import Profile from "./Profile.vue";
+---
+
+<NavBar title="Profile">
+  <main>
+    <Profile client:only="vue" />
+  </main>
+</NavBar>

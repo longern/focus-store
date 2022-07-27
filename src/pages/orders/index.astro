@@ -1,0 +1,10 @@
+---
+import NavBar from '@/layouts/NavBar.astro';
+import OrderDetail from '@/components/OrderDetail.vue';
+---
+
+<NavBar title="Order Detail">
+  <main>
+    <OrderDetail client:load />
+  </main>
+</NavBar>

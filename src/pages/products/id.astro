@@ -1,0 +1,156 @@
+---
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiArrowLeft } from "@mdi/js";
+
+import ProductDetail from "@/components/ProductDetail";
+import ProductDetailActions from "@/components/ProductDetailActions.vue";
+import Layout from '@/layouts/NavBar.astro';
+import { products } from "@/interfaces";
+
+const product = products[0];
+
+const i18n = {
+  en: {
+    "Product Detail": "Product Detail",
+  },
+  "zh-CN": {
+    "Product Detail": "产品详情",
+  },
+}
+---
+
+<Layout title="Product Detail">
+  <header>
+    <div style="display: flex; flex-grow: 1; flex-basis: 0">
+      <a href="/products">
+        <button class="btn-icon">
+          <SvgIcon type="mdi" path={mdiArrowLeft}></SvgIcon>
+        </button>
+      </a>
+    </div>
+    <div class="page-title">
+      <t>Product Detail</t>
+    </div>
+    <div style="flex-grow: 1; flex-basis: 0"></div>
+  </header>
+  <main>
+    <div class="container">
+      <ProductDetail product={product}></ProductDetail>
+    </div>
+  </main>
+  <ProductDetailActions client:only="vue" />
+  <i18n set:text={JSON.stringify(i18n)} />
+</Layout>
+
+<style is:global is:inline>
+  header {
+    display: flex;
+    background-color: #333;
+    color: white;
+  }
+
+  header .page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-detail .product-general {
+    display: flex;
+  }
+
+  .product-detail .detail-text {
+    flex-grow: 1;
+    margin: 12px;
+  }
+
+  .product-detail .detail-image {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .product-detail .detail-image>* {
+    flex-shrink: 0;
+    scroll-snap-align: center;
+  }
+
+  .product-detail .price {
+    font-size: 1.5em;
+    margin: 8px 0;
+  }
+
+  .product-detail .name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .product-detail .description {
+    margin: 12px;
+  }
+
+  .product-detail .option {
+    display: flex;
+    align-items: center;
+    margin-top: 24px;
+  }
+
+  .product-detail .option-name {
+    width: 128px;
+    margin-bottom: 4px;
+  }
+
+  .product-detail .option-value {
+    display: inline-block;
+    margin: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #eee;
+    background-clip: padding-box;
+    cursor: pointer;
+    border: 1px solid transparent;
+    user-select: none;
+  }
+
+  .product-detail input[type="radio"]:checked+.option-value {
+    border-color: gray;
+  }
+
+  .product-detail .buy-buttons {
+    margin-top: 24px;
+  }
+
+  @media not all and (max-width: 960px) {
+    header {
+      display: none;
+    }
+
+    .container {
+      width: 1200px;
+      padding: 12px;
+    }
+
+    .product-detail .detail-image {
+      width: 600px;
+      flex-shrink: 0;
+      margin-right: 24px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .product-general {
+      flex-direction: column;
+    }
+
+    .product-detail .detail-image {
+      width: 100%;
+    }
+
+    .product-detail .option {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+import NavBar from '@/layouts/NavBar.astro';
+import Products from '@/components/Products.astro';
+import { products } from '@/interfaces';
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiMagnify } from "@mdi/js";
+---
+
+<NavBar title="Products">
+  <main>
+    <div class="container">
+      <form action="/products" method="get" role="search" class="search-form">
+        <input
+          type="search"
+          id="search"
+          name="search"
+          autocomplete="off"
+          aria-label="Search for products..."
+        />
+        <button type="submit" class="btn-icon" aria-label="Search">
+          <SvgIcon type="mdi" path={mdiMagnify}></SvgIcon>
+        </button>
+      </form>
+      <Products products={products} />
+    </div>
+  </main>
+</NavBar>
+
+<script is:inline>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const search = params.get('search');
+    if (search) document.getElementById('search').value = search;
+  })();
+</script>
+
+<style>
+  .search-form {
+    position: sticky;
+    display: flex;
+    align-items: center;
+    margin: 0 8px;
+    top: 0;
+    z-index: 1;
+    background-color: whitesmoke;
+  }
+
+  .search-form input {
+    flex-grow: 1;
+    height: 2em;
+    padding: 0.5rem 0.8rem;
+    border-radius: 1em;
+  }
+</style>

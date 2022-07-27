@@ -1,0 +1,66 @@
+---
+import ProductCard from "@/components/ProductCard";
+import { Product } from '@/interfaces';
+
+const { products } = Astro.props as { products: Array<Product> };
+---
+
+<div class="products">
+  {products.map(product => (<ProductCard product={ product }></ProductCard>))}
+</div>
+<div class="products-empty">Not Found</div>
+
+<style is:global is:inline>
+  .products {
+    display: flex;
+    margin: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .products .product-card {
+    width: 300px;
+  }
+
+  .products .product-card>a {
+    margin: 4px;
+    display: block;
+    border-radius: 6px;
+    background-color: white;
+    overflow: hidden;
+  }
+
+  @media (max-width: 960px) {
+    .products .product-card {
+      flex-basis: 50%;
+    }
+  }
+
+  .products .product-card .card-text {
+    padding: 8px;
+  }
+
+  .products .product-card .name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .products .product-card .price {
+    font-size: 1.2em;
+  }
+
+  .products-empty {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .products:empty,
+  .products:not(:empty) + .products-empty {
+    display: none;
+  }
+</style>

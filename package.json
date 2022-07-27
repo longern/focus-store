@@ -10,6 +10,15 @@
   },
   "devDependencies": {
     "@astrojs/vue": "^0.1.5",
-    "astro": "^1.0.0-beta.46"
+    "@cloudflare/workers-types": "^3.13.0",
+    "@intlify/vite-plugin-vue-i18n": "^3.4.0",
+    "@jamescoyle/vue-icon": "^0.1.2",
+    "@mdi/js": "^6.7.96",
+    "@types/md5": "^2.3.2",
+    "@vueup/vue-quill": "^1.0.0-beta.8",
+    "astro": "^1.0.0-beta.72",
+    "md5": "^2.3.0",
+    "vue-i18n": "^9.1.10",
+    "vue-router": "^4.0.16"
   }
 }

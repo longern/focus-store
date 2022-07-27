@@ -1,0 +1,8 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Admin from "./Admin.vue";
+---
+
+<Layout title="Admin Panel">
+  <Admin client:only="vue"></Admin>
+</Layout>
