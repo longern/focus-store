@@ -82,7 +82,7 @@ onBeforeMount(() => {
             type="radio"
             hidden
           />
-          <div class="option-value">
+          <div class="option-value" tabindex="0">
             <span v-text="value.text"></span>
           </div>
         </label>
@@ -90,9 +90,19 @@ onBeforeMount(() => {
     </div>
 
     <div class="option">
-      <div class="option-name" v-text="t('Quantity')"></div>
+      <label
+        class="option-name"
+        v-text="t('Quantity')"
+        :for="`quantity-${$.uid}`"
+      ></label>
       <div>
-        <input v-model="quantity" type="number" min="1" step="1" />
+        <input
+          v-model="quantity"
+          type="number"
+          :id="`quantity-${$.uid}`"
+          min="1"
+          step="1"
+        />
       </div>
     </div>
 

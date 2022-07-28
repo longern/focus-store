@@ -13,7 +13,11 @@ export default defineComponent({
           "div",
           { class: "detail-image" },
           this.product.images.map((image) =>
-            h("div", { class: "square" }, h("img", { src: image }))
+            h(
+              "div",
+              { class: "square" },
+              h("img", { src: image, alt: this.product.name })
+            )
           )
         ),
         h("div", { class: "detail-text" }, [

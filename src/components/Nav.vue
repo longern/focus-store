@@ -63,17 +63,13 @@ onMounted(() => {
       <div style="display: flex; align-items: center">
         <div style="flex-grow: 1"></div>
         <div id="navExtra"></div>
-        <a href="/cart">
-          <button class="btn-icon" aria-label="Cart">
-            <span :key="mounted && cart.length" :badge="cart.length || null">
-              <SvgIcon type="mdi" :path="mdiCart"></SvgIcon>
-            </span>
-          </button>
+        <a href="/cart" class="btn-icon" aria-label="Cart">
+          <span :key="mounted && cart.length" :badge="cart.length || null">
+            <SvgIcon type="mdi" :path="mdiCart"></SvgIcon>
+          </span>
         </a>
-        <a href="/profile">
-          <button class="btn-icon" aria-label="Profile">
-            <SvgIcon type="mdi" :path="mdiAccount"></SvgIcon>
-          </button>
+        <a href="/profile" class="btn-icon" aria-label="Profile">
+          <SvgIcon type="mdi" :path="mdiAccount"></SvgIcon>
         </a>
       </div>
     </div>

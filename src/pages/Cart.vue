@@ -31,7 +31,7 @@ function removeFromCart(product) {
       <a v-for="item in cart" :key="item.id" :href="`/products/${item.id}`">
         <div class="cart-item">
           <div class="cart-item-image">
-            <img :src="item.image" width="100" height="100" />
+            <img :src="item.image" width="100" height="100" :alt="item.name" />
           </div>
           <div class="cart-item-text">
             <div class="cart-item-name">{{ item.name }}</div>
@@ -51,13 +51,18 @@ function removeFromCart(product) {
                   type="number"
                   min="1"
                   step="1"
+                  :aria-label="t('Quantity')"
                   v-model="item.quantity"
                   style="width: 48px"
                 />
               </div>
             </div>
           </div>
-          <button class="btn-icon" @click.prevent="removeFromCart(item)">
+          <button
+            class="btn-icon"
+            @click.prevent="removeFromCart(item)"
+            aria-label="Remove from cart"
+          >
             <SvgIcon type="mdi" :path="mdiClose"></SvgIcon>
           </button>
         </div>
@@ -69,21 +74,15 @@ function removeFromCart(product) {
         <span class="currency-prefix"></span>
         <span v-text="totalPrice"></span>
       </div>
-      <Teleport to="#navExtra" :disabled="!isMobile">
-        <a href="/checkout">
-          <button class="btn-normal primary" v-text="t('Checkout')"></button>
-        </a>
-      </Teleport>
+      <a href="/checkout" class="btn-normal primary" v-text="t('Checkout')" />
     </div>
   </div>
   <div v-else class="cart-empty">
     <div class="cart-empty-text">
       <span v-text="t('Your cart is empty')"></span>
     </div>
-    <a href="/products" class="cart-empty-link">
-      <button class="btn-normal primary">
-        <span v-text="t('Continue Shopping')"></span>
-      </button>
+    <a href="/products" class="cart-empty-link btn-normal primary">
+      <span v-text="t('Continue Shopping')"></span>
     </a>
   </div>
 </template>
@@ -166,11 +165,13 @@ en:
   Checkout: Checkout
   Continue Shopping: Continue Shopping
   "Total: ": "Total: "
+  Quantity: Quantity
   Your cart is empty: Your cart is empty
 zh-CN:
   Cart: 购物车
   Checkout: 结算
   Continue Shopping: 继续购物
   "Total: ": 合计：
+  Quantity: 数量
   Your cart is empty: 购物车是空的
 </i18n>
